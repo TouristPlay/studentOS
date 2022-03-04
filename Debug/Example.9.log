@@ -1,0 +1,44 @@
+﻿  disciplineList.cpp
+  groupList.cpp
+D:\Универ\2 курс\Второй семестр\++\LaboratoryWorks\LaboratoryWorkCPP.4\Example.9\groupList.h(19,23): error C2061: syntax error: identifier 'studentList'
+D:\Универ\2 курс\Второй семестр\++\LaboratoryWorks\LaboratoryWorkCPP.4\Example.9\groupList.h(54,35): error C2061: syntax error: identifier 'studentList'
+D:\Универ\2 курс\Второй семестр\++\LaboratoryWorks\LaboratoryWorkCPP.4\Example.9\groupList.h(60,21): error C2433: 'studentList': 'friend' not permitted on data declarations
+D:\Универ\2 курс\Второй семестр\++\LaboratoryWorks\LaboratoryWorkCPP.4\Example.9\groupList.h(60,21): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+D:\Универ\2 курс\Второй семестр\++\LaboratoryWorks\LaboratoryWorkCPP.4\Example.9\groupList.cpp(5,40): error C2572: 'groupList::read': redefinition of default argument: parameter 1
+D:\Универ\2 курс\Второй семестр\++\LaboratoryWorks\LaboratoryWorkCPP.4\Example.9\groupList.h(7): message : see declaration of 'groupList::read'
+D:\Универ\2 курс\Второй семестр\++\LaboratoryWorks\LaboratoryWorkCPP.4\Example.9\groupList.cpp(42,41): error C2572: 'groupList::write': redefinition of default argument: parameter 1
+D:\Универ\2 курс\Второй семестр\++\LaboratoryWorks\LaboratoryWorkCPP.4\Example.9\groupList.h(10): message : see declaration of 'groupList::write'
+D:\Универ\2 курс\Второй семестр\++\LaboratoryWorks\LaboratoryWorkCPP.4\Example.9\groupList.cpp(111,32): error C2061: syntax error: identifier 'studentList'
+D:\Универ\2 курс\Второй семестр\++\LaboratoryWorks\LaboratoryWorkCPP.4\Example.9\groupList.cpp(204,44): error C2061: syntax error: identifier 'studentList'
+D:\Универ\2 курс\Второй семестр\++\LaboratoryWorks\LaboratoryWorkCPP.4\Example.9\groupList.cpp(209,11): error C2065: '_student': undeclared identifier
+D:\Универ\2 курс\Второй семестр\++\LaboratoryWorks\LaboratoryWorkCPP.4\Example.9\groupList.cpp(209,42): error C2065: '_student': undeclared identifier
+D:\Универ\2 курс\Второй семестр\++\LaboratoryWorks\LaboratoryWorkCPP.4\Example.9\groupList.cpp(209,2): error C2672: 'for_each': no matching overloaded function found
+D:\Универ\2 курс\Второй семестр\++\LaboratoryWorks\LaboratoryWorkCPP.4\Example.9\groupList.cpp(219,2): error C2780: '_Fn std::for_each(_InIt,_InIt,_Fn)': expects 3 arguments - 2 provided
+E:\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.30.30705\include\algorithm(256): message : see declaration of 'std::for_each'
+  main.cpp
+D:\Универ\2 курс\Второй семестр\++\LaboratoryWorks\LaboratoryWorkCPP.4\Example.9\groupList.h(19,23): error C2061: syntax error: identifier 'studentList'
+D:\Универ\2 курс\Второй семестр\++\LaboratoryWorks\LaboratoryWorkCPP.4\Example.9\groupList.h(54,35): error C2061: syntax error: identifier 'studentList'
+D:\Универ\2 курс\Второй семестр\++\LaboratoryWorks\LaboratoryWorkCPP.4\Example.9\groupList.h(60,21): error C2433: 'studentList': 'friend' not permitted on data declarations
+D:\Универ\2 курс\Второй семестр\++\LaboratoryWorks\LaboratoryWorkCPP.4\Example.9\groupList.h(60,21): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+D:\Универ\2 курс\Второй семестр\++\LaboratoryWorks\LaboratoryWorkCPP.4\Example.9\groupList.h(3,17): error C2011: 'groupList': 'class' type redefinition
+D:\Универ\2 курс\Второй семестр\++\LaboratoryWorks\LaboratoryWorkCPP.4\Example.9\groupList.h(3): message : see declaration of 'groupList'
+D:\Универ\2 курс\Второй семестр\++\LaboratoryWorks\LaboratoryWorkCPP.4\Example.9\main.cpp(27,12): error C2079: 'group' uses undefined class 'groupList'
+D:\Универ\2 курс\Второй семестр\++\LaboratoryWorks\LaboratoryWorkCPP.4\Example.9\main.cpp(28,14): error C2146: syntax error: missing ';' before identifier 'student'
+D:\Универ\2 курс\Второй семестр\++\LaboratoryWorks\LaboratoryWorkCPP.4\Example.9\main.cpp(28,14): error C2065: 'student': undeclared identifier
+D:\Универ\2 курс\Второй семестр\++\LaboratoryWorks\LaboratoryWorkCPP.4\Example.9\main.cpp(35,2): error C2065: 'student': undeclared identifier
+D:\Универ\2 курс\Второй семестр\++\LaboratoryWorks\LaboratoryWorkCPP.4\Example.9\main.cpp(36,2): error C2065: 'student': undeclared identifier
+D:\Универ\2 курс\Второй семестр\++\LaboratoryWorks\LaboratoryWorkCPP.4\Example.9\main.cpp(38,2): error C2065: 'student': undeclared identifier
+D:\Универ\2 курс\Второй семестр\++\LaboratoryWorks\LaboratoryWorkCPP.4\Example.9\main.cpp(39,2): error C2065: 'student': undeclared identifier
+D:\Универ\2 курс\Второй семестр\++\LaboratoryWorks\LaboratoryWorkCPP.4\Example.9\main.cpp(43,18): error C2065: 'student': undeclared identifier
+  studentList.cpp
+D:\Универ\2 курс\Второй семестр\++\LaboratoryWorks\LaboratoryWorkCPP.4\Example.9\groupList.h(19,23): error C2061: syntax error: identifier 'studentList'
+D:\Универ\2 курс\Второй семестр\++\LaboratoryWorks\LaboratoryWorkCPP.4\Example.9\groupList.h(54,35): error C2061: syntax error: identifier 'studentList'
+D:\Универ\2 курс\Второй семестр\++\LaboratoryWorks\LaboratoryWorkCPP.4\Example.9\groupList.h(60,21): error C2433: 'studentList': 'friend' not permitted on data declarations
+D:\Универ\2 курс\Второй семестр\++\LaboratoryWorks\LaboratoryWorkCPP.4\Example.9\groupList.h(60,21): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+D:\Универ\2 курс\Второй семестр\++\LaboratoryWorks\LaboratoryWorkCPP.4\Example.9\studentList.cpp(218,17): error C2248: 'groupList::_groupList': cannot access private member declared in class 'groupList'
+D:\Универ\2 курс\Второй семестр\++\LaboratoryWorks\LaboratoryWorkCPP.4\Example.9\groupList.h(57): message : see declaration of 'groupList::_groupList'
+D:\Универ\2 курс\Второй семестр\++\LaboratoryWorks\LaboratoryWorkCPP.4\Example.9\groupList.h(3): message : see declaration of 'groupList'
+D:\Универ\2 курс\Второй семестр\++\LaboratoryWorks\LaboratoryWorkCPP.4\Example.9\studentList.cpp(218,44): error C2248: 'groupList::_groupList': cannot access private member declared in class 'groupList'
+D:\Универ\2 курс\Второй семестр\++\LaboratoryWorks\LaboratoryWorkCPP.4\Example.9\groupList.h(57): message : see declaration of 'groupList::_groupList'
+D:\Универ\2 курс\Второй семестр\++\LaboratoryWorks\LaboratoryWorkCPP.4\Example.9\groupList.h(3): message : see declaration of 'groupList'
+  Generating Code...

@@ -1,0 +1,223 @@
+#include "groupList.h"
+
+
+// Публичный метод считывание списка групп
+bool groupList::read(string filename = "group") {
+	// Создаем объект чтения файла
+	ifstream file(filename + ".txt");
+
+	// Содержит слово
+	string _group;
+
+	if (!file) {
+		cerr << "\n Не удалось открыть файл!" << endl;
+		return false;
+	}
+
+	// Считываем данные студента
+	while (!file.eof()) {
+		int positionOne, positionTwo = 0;
+		getline(file, _group);
+
+		// Получаем номер группы
+		positionOne = _group.find(" ", positionTwo + 1);
+		copy(_group.begin(), _group.begin() + positionOne, back_inserter(this->group));
+
+		// Получаем курс
+		positionTwo = _group.find(" ", positionOne + 1);
+		copy(_group.begin() + positionOne + 1, _group.begin() + positionTwo, back_inserter(this->course));
+
+		// Получаем специальность
+		copy(_group.begin() + positionTwo + 1, _group.end(), back_inserter(this->speciality));
+
+		// Добавляем группы в список
+		append(this->group, this->course, this->speciality);
+	}
+
+
+	return true;
+}
+
+// Публичный метод для записи списка студентов в файл
+bool groupList::write(string filename = "newGroup") {
+	// Если список не пустой
+	if (!this->empty()) {
+		// Создаем объект записи файла
+		ofstream file(filename + ".txt");
+
+		// Если не смогли открыть файл
+		if (!file) {
+			cerr << "\n Не удалось открыть файл!" << endl;
+			return false;
+		}
+
+
+		// Записываем слова в файл
+		for_each(this->_groupList.begin(), this->_groupList.end(),
+			[&file, this](map<string, string> element) {
+				// Выводим строку в файл
+				file << this->assemblyString(element) << endl;
+			}
+		);
+		return true;
+	}
+	return false;
+}
+
+// Публичный метод добавления группы в список
+bool groupList::create() {
+	// Просим ввести специальность
+	cout << " Введите специальность: ";
+	cin.ignore();
+	getline(cin, this->speciality);
+	// Вводим номер группы
+	cout << " Введите номер группы: ";
+	cin >> this->group;
+	// Вводим курс
+	cout << " Введите курс: ";
+	cin >> this->course;
+
+	//--Проверка есть ли студент в группе--///
+
+
+	// Добавляем группы в список
+	append(this->group, this->course, this->speciality);
+
+	return true;
+}
+
+// Публичный метод изменения информации о группе
+bool groupList::update(int id) {
+	if (empty() || id > (int)this->_groupList.size() || id < 0) {
+		return false;
+	}
+	// Выводим найденную группу
+	map<string, string> element = this->_groupList[id - 1];
+	cout << " Группы " << " \"#" << id << " " << this->assemblyString(element) << "\" найдена" << endl;
+
+	// Создаем новую группу
+	this->create();
+
+	// Меняем местами группы
+	swap(this->_groupList[id - 1], this->_groupList[this->_groupList.size() - 1]);
+
+	// Удаляем группу в которого нужно внести поправки
+	this->_groupList.erase(_groupList.end() - 1);
+
+	return true;
+}
+
+// Публичный метод удаление информации о группе
+bool groupList::remove(int id, studentList _student) {
+
+	// Если список пуст или нет такой группы
+	if (empty() || id > (int)this->_groupList.size() || id < 0) {
+		return false;
+	}
+
+
+	// Итератор на вектор
+	vector <map<string, string>> ::iterator it = _groupList.begin() + id - 1;
+
+	/*if (this->checkStudent()) {
+
+	}*/
+
+
+
+	// Удаляем группу из списка
+	this->_groupList.erase(_groupList.begin() + id - 1);
+	return true;
+}
+
+// Публичный метод вывода списка групп в консоль
+bool groupList::output() {
+
+	if (empty()) {
+		return false;
+	}
+
+	// Счетчик
+	int counter = 1;
+
+	// Выводим список групп
+	for_each(this->_groupList.begin(), this->_groupList.end(),
+		[this, &counter](map<string, string> element) {
+			// Выводим строку в консоль
+			cout << " #" << counter << " " << this->assemblyString(element) << endl;
+			// Увеличиваем счетчик
+			++counter;
+		}
+	);
+	return true;
+}
+
+
+// Приватный метод для проверки пуст ли список групп
+bool groupList::empty() {
+	return this->_groupList.empty();
+}
+
+// Приватный метод для создание новой группы
+void groupList::append(string newGroup, string newCourse, string newSpeciality) {
+
+	// Создаем врменный контейнер map
+	map<string, string> _newGroup;
+
+	// Заполняем контейнер данными
+	_newGroup["group"] = newGroup; // Группы
+	_newGroup["course"] = newCourse; // Курс
+	_newGroup["speciality"] = newSpeciality; // Специальность
+
+	// Обнуляем перменные класса
+	this->resetVariables();
+
+	// Добавляем студента в общий список
+	this->_groupList.push_back(_newGroup);
+}
+
+// Приватный метод обнуляет перменные класса
+void groupList::resetVariables() {
+	// Обнуляем временные перменные
+	this->course = "";
+	this->group = "";
+	this->speciality = "";
+}
+
+// Приватный метод собирает строку 
+string groupList::assemblyString(map<string, string> element) {
+
+	string data;
+
+	// Создаем строку последовательно соединяя 
+	for (auto& tempItem : this->writeQueue) {
+		for (auto& itemElement : element) {
+			if (tempItem == itemElement.first) {
+				data += " " + itemElement.second; // Складываем строки
+			}
+		}
+	}
+	return data; // Возвращаем собранную строку
+}
+
+// Приватный метод проверяет, если студент в группе
+bool groupList::checkStudent(string group, studentList _student) {
+	// Флаг поиска
+	bool flag = false;
+
+	// Перебираем массив всех студентов
+	for_each(_student._studentList.begin(), _student._studentList.end(),
+		[group, &flag](map<string, string> element) {
+			// Итератор на элемент вектора
+			map <string, string> ::iterator it = element.find("group");
+			// Если нашли студента в группе
+			if (it->second == group) {
+				flag = true;
+				return;
+			}
+		}
+	);
+
+	return flag;
+}
+	
