@@ -1,5 +1,5 @@
 #include "studentList.h"
-
+#include "groupList.h"
 
 // Публичный метод считывание списка студентов с файла
 bool studentList::read(groupList _group, string filename) {
@@ -41,8 +41,8 @@ bool studentList::read(groupList _group, string filename) {
 
 		//Проверка есть ли группа
 		if (!this->checkGroup(this->group, _group)) {
-			cout << " Группы " << this->group << " не существует! " << endl;
-			resetVariables(); // Обнуляем временные переменные
+			cout << " Не удалось добавить! Группы \"" << this->group << "\" не существует! " << endl;
+			this->resetVariables(); // Обнуляем временные переменные
 			continue;
 		}
 
@@ -94,6 +94,8 @@ bool studentList::create(groupList _group) {
 
 	// Проверка есть ли группа
 	if (!this->checkGroup(this->group, _group)) {
+		cout << " Не удалось добавить! Группы \"" << this->group << "\" не существует! " << endl;
+		this->resetVariables(); // Обнуляем временные переменные
 		return false;
 	}
 
@@ -157,7 +159,6 @@ bool studentList::output() {
 	);
 	return true;
 }
-
 
 // Приватный метод для создание нового студента
 void studentList::append(string newName, string newSurename, string newMiddlename, string newSex, string newGroup) {

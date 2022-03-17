@@ -1,8 +1,8 @@
 #include "groupList.h"
-
+#include "studentList.h"
 
 // Публичный метод считывание списка групп
-bool groupList::read(string filename = "group") {
+bool groupList::read(studentList _student, string filename) {
 	// Создаем объект чтения файла
 	ifstream file(filename + ".txt");
 
@@ -30,6 +30,13 @@ bool groupList::read(string filename = "group") {
 		// Получаем специальность
 		copy(_group.begin() + positionTwo + 1, _group.end(), back_inserter(this->speciality));
 
+		// Проверка есть ли такая группа
+		if (checkGroup(this->group)) {
+			cout << " Не удалось добавить! Группа \"" << this->group << "\" существует!" << endl;
+			this->resetVariables(); // Обнуляем временные переменные;
+			continue;
+		}
+
 		// Добавляем группы в список
 		append(this->group, this->course, this->speciality);
 	}
@@ -39,7 +46,7 @@ bool groupList::read(string filename = "group") {
 }
 
 // Публичный метод для записи списка студентов в файл
-bool groupList::write(string filename = "newGroup") {
+bool groupList::write(string filename) {
 	// Если список не пустой
 	if (!this->empty()) {
 		// Создаем объект записи файла
@@ -65,7 +72,7 @@ bool groupList::write(string filename = "newGroup") {
 }
 
 // Публичный метод добавления группы в список
-bool groupList::create() {
+bool groupList::create(studentList _student) {
 	// Просим ввести специальность
 	cout << " Введите специальность: ";
 	cin.ignore();
@@ -77,8 +84,12 @@ bool groupList::create() {
 	cout << " Введите курс: ";
 	cin >> this->course;
 
-	//--Проверка есть ли студент в группе--///
-
+	// Проверка есть ли такая группа
+	if (checkGroup(this->group)) {
+		cout << " Не удалось добавить! Группа \"" << this->group << "\" существует!" << endl;
+		this->resetVariables(); // Обнуляем временные переменные;
+		return false;
+	}
 
 	// Добавляем группы в список
 	append(this->group, this->course, this->speciality);
@@ -87,7 +98,7 @@ bool groupList::create() {
 }
 
 // Публичный метод изменения информации о группе
-bool groupList::update(int id) {
+bool groupList::update(int id, studentList _student) {
 	if (empty() || id > (int)this->_groupList.size() || id < 0) {
 		return false;
 	}
@@ -96,7 +107,7 @@ bool groupList::update(int id) {
 	cout << " Группы " << " \"#" << id << " " << this->assemblyString(element) << "\" найдена" << endl;
 
 	// Создаем новую группу
-	this->create();
+	this->create(_student);
 
 	// Меняем местами группы
 	swap(this->_groupList[id - 1], this->_groupList[this->_groupList.size() - 1]);
@@ -115,14 +126,11 @@ bool groupList::remove(int id, studentList _student) {
 		return false;
 	}
 
-
-	// Итератор на вектор
-	vector <map<string, string>> ::iterator it = _groupList.begin() + id - 1;
-
-	/*if (this->checkStudent()) {
-
-	}*/
-
+	// Проверяем, есть ли студенты в группу
+	if (this->checkStudent(_groupList[id - 1]["group"], _student)) {
+		cout << " Не удалось удалить! В \"" << _groupList[id - 1]["group"] << "\" группе  есть студенты" << endl;
+		return false;
+	}
 
 
 	// Удаляем группу из списка
@@ -200,7 +208,7 @@ string groupList::assemblyString(map<string, string> element) {
 	return data; // Возвращаем собранную строку
 }
 
-// Приватный метод проверяет, если студент в группе
+// Приватный метод проверяет, есть ли студент в группе
 bool groupList::checkStudent(string group, studentList _student) {
 	// Флаг поиска
 	bool flag = false;
@@ -213,7 +221,24 @@ bool groupList::checkStudent(string group, studentList _student) {
 			// Если нашли студента в группе
 			if (it->second == group) {
 				flag = true;
-				return;
+			}
+		}
+	);
+
+	return flag;
+}
+
+// Приватный метод для проверки существует ли группа
+bool groupList::checkGroup(string groupNumber) {
+	// Флаг поиска
+	bool flag = false;
+	// Перебираем массив групп
+	for_each(this->_groupList.begin(), this->_groupList.end(),
+		[groupNumber, &flag](map<string, string> element) {
+			// Возвращаем итератор на найденный элемент
+			map<string, string> ::iterator it = element.find("group");
+			if (it->second == groupNumber) {
+				flag = true;
 			}
 		}
 	);

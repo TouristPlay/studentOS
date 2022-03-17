@@ -1,5 +1,6 @@
 #include "library.h"
 
+class deliveryDisciplines;
 
 //  ласс дисциплин
 class disciplineList {
@@ -33,5 +34,8 @@ class disciplineList {
 
 		// —писок дисциплин
 		vector<string> _disciplineList;
+
+		// ќбъ€вл€ем дружественный класс
+		friend deliveryDisciplines;
 };
 

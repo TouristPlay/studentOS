@@ -1,20 +1,22 @@
 #include "library.h"
-#include "studentList.h"
+
+class studentList;
+class reports;
 
 class groupList {
 	public: // Публичная область класса
 
 		// Метод считывание списка групп
-		bool read(string filename = "group");
+		bool read(studentList _student, string filename = "group");
 
 		// Метод для записи списка студентов в файл
 		bool write(string filename = "newGroup");
 
 		// Метод добавления группы в список
-		bool create();
+		bool create(studentList _student);
 
 		// Метод изменения информации о группе
-		bool update(int id);
+		bool update(int id, studentList _student);
 
 		// Метод удаление информации о группе
 		bool remove(int id, studentList _student);
@@ -51,13 +53,17 @@ class groupList {
 		// Метод собирает строку 
 		string assemblyString(map<string, string> element);
 
-		// Метод проверяет, если студент в группе
+		// Метод проверяет, есть ли студент в группе
 		bool checkStudent(string group, studentList _student);
+
+		// Метод для проверки существует ли группа
+		bool checkGroup(string groupNumber);
 
 		// Список всей группы
 		vector <map<string, string>> _groupList;
 
 		// Объявляем дружественный класс
 		friend studentList;
+		friend reports;
 };
 

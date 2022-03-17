@@ -1,5 +1,8 @@
 #include "library.h"
-#include "groupList.h"
+
+class groupList;
+class ratingList;
+class reports;
 
 class studentList {
 	public: // Публичная область класса
@@ -54,13 +57,15 @@ class studentList {
 		// Метод для проверки пуст ли список студентов
 		bool empty();
 
-		// Метод для проверки существует группа
+		// Метод для проверки существует ли группа
 		bool checkGroup(string groupNumber, groupList _group);
 
 		// Вектор хранит информацию о студентах
 		vector<map<string, string>> _studentList;
 
 		// Объявялем дружественный класс
+		friend ratingList;
 		friend groupList;
+		friend reports;
 };
 

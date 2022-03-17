@@ -24,6 +24,15 @@
     <ClInclude Include="disciplineList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="deliveryDisciplines.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ratingList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="reports.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="groupList.cpp">
@@ -36,6 +45,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="deliveryDisciplines.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ratingList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="reports.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

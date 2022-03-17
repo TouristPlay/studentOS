@@ -19,14 +19,20 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="deliveryDisciplines.h" />
     <ClInclude Include="disciplineList.h" />
     <ClInclude Include="groupList.h" />
+    <ClInclude Include="ratingList.h" />
+    <ClInclude Include="reports.h" />
     <ClInclude Include="studentList.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="deliveryDisciplines.cpp" />
     <ClCompile Include="disciplineList.cpp" />
     <ClCompile Include="groupList.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ratingList.cpp" />
+    <ClCompile Include="reports.cpp" />
     <ClCompile Include="studentList.cpp" />
   </ItemGroup>
   <ItemGroup>
