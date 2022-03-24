@@ -2,6 +2,7 @@
 
 class studentList;
 class reports;
+class ratingList;
 
 class groupList {
 	public: // Публичная область класса
@@ -59,11 +60,15 @@ class groupList {
 		// Метод для проверки существует ли группа
 		bool checkGroup(string groupNumber);
 
+		// Метод для считывания строки
+		void input();
+
 		// Список всей группы
-		vector <map<string, string>> _groupList;
+		vector <map<string, string>> _groupList; // Классом!!!!
 
 		// Объявляем дружественный класс
 		friend studentList;
 		friend reports;
+		friend ratingList;
 };
 

@@ -7,10 +7,27 @@
 
 
 // Метод вывода дисциплин для сдачи конкретной группы
-bool reports::getGroupDiscipline(string groupNumber, deliveryDisciplines _deliveryDisciplines) {
+bool reports::getGroupDiscipline(string groupNumber, deliveryDisciplines _deliveryDisciplines, groupList _group) {
 
+	// Если списко пуст
+	if (_deliveryDisciplines.empty() || _group.empty()) {
+		return false;
+	}
+
+	if (_group.empty()) {
+		return false;
+	}
+
+	
+	if (!_group.checkGroup(groupNumber)) {
+		cout << " Группы \"" << groupNumber << "\" не существует" << endl;
+		return false;
+	}
+
+	
 	// Файловый поток
 	ofstream file("GroupDiscipline-" + groupNumber + ".txt");
+
 
 	// Если файл не удалось открыть
 	if (!file) {
@@ -23,8 +40,8 @@ bool reports::getGroupDiscipline(string groupNumber, deliveryDisciplines _delive
 	for_each(_deliveryDisciplines._deliveryDisciplines[groupNumber].begin(), _deliveryDisciplines._deliveryDisciplines[groupNumber].end(),
 		[&counter, &file](deliveryDisciplines::discipline item) {
 			// Выводим в консоль
-			cout << left << " #" << counter << " | " << setw(25) << item.name << " | " << setw(15) << item.type << " | " << item.date << endl;
-			file << left << " #" << counter << " | " << setw(25) << item.name << " | " << setw(15) << item.type << " | " << item.date << endl;
+			cout << left << "\t #" << counter << " | " << setw(25) << item.name << " | " << setw(15) << item.type << " | " << item.date << endl;
+			file << left << "\t #" << counter << " | " << setw(25) << item.name << " | " << setw(15) << item.type << " | " << item.date << endl;
 			++counter;
 		}	
 	);
@@ -35,6 +52,11 @@ bool reports::getGroupDiscipline(string groupNumber, deliveryDisciplines _delive
 // Метод вывода дисциплин всего факультета
 bool reports::getFacultyDescipline(deliveryDisciplines _deliveryDisciplines) {
 	
+	// Если списко пуст
+	if (_deliveryDisciplines.empty()) {
+		return false;
+	}
+
 	// Файловый поток
 	ofstream file("GroupDiscipline.txt");
 
@@ -71,6 +93,14 @@ bool reports::getFacultyDescipline(deliveryDisciplines _deliveryDisciplines) {
 // Метод вывода оценок студента
 bool reports::getStudentGrade(ratingList _rating, studentList _student) {
 
+	if (_rating.empty()) {
+		return false;
+	}
+
+	if (_student.empty()) {
+		return false;
+	}
+	
 	// Выводим список всех студентов
 	_student.output();
 
@@ -129,6 +159,14 @@ bool reports::getStudentGrade(ratingList _rating, studentList _student) {
 
 // Метод вывода оценок студентов выбранной группы
 bool reports::getGroupGrade(ratingList _rating, groupList _group) {
+	
+	if (_rating.empty()) {
+		return false;
+	}
+
+	if (_group.empty()) {
+		return false;
+	}
 
 	string groupNumber;
 
@@ -190,7 +228,9 @@ bool reports::getGroupGrade(ratingList _rating, groupList _group) {
 // Метод вывода студентов не сдавших сессию
 bool reports::getStudentNotPassSession(ratingList _rating) {
 
-
+	if (_rating.empty()) {
+		return false;
+	}
 
 	// Файловый поток
 	ofstream file("studentNotPassSession.txt");
@@ -215,8 +255,8 @@ bool reports::getStudentNotPassSession(ratingList _rating) {
 
 			for (;it3 != it2->second.end(); ++it3) {
 				if (it3->grade == "Не указано" || it3->grade == "незачет" || it3->grade == "2") {
-					cout << " #" << counter << " " << it2->first << " " << it->first << endl;
-					file << " #" << counter << " " << it2->first << " " << it->first << endl;
+					cout << "\t #" << counter << " " << it2->first << " " << it->first << endl;
+					file << "\t #" << counter << " " << it2->first << " " << it->first << endl;
 					break;
 				}
 			}
@@ -228,7 +268,11 @@ bool reports::getStudentNotPassSession(ratingList _rating) {
 }
 
 // Метод вывода среднего балла по группе
-double reports::getGroupAverage(ratingList _rating, string groupNumber) {
+bool reports::getGroupAverage(ratingList _rating, string groupNumber) {
+
+	if (_rating.empty()) {
+		return false;
+	}
 
 
 	// Файловый поток
@@ -246,9 +290,7 @@ double reports::getGroupAverage(ratingList _rating, string groupNumber) {
 	double average = 0;
 	int counter = 0;
 
-	// Вывод списка оценок для студента
 	for (; element != _rating._ratingList[groupNumber].end(); ++element, ++counter) {
-		// Выводим оценки
 		for (ratingList::rating item : element->second) {
 			if (item.grade == "2" || item.grade == "3" || item.grade == "4" || item.grade == "5") {
 				average += stoi(item.grade);
@@ -258,19 +300,31 @@ double reports::getGroupAverage(ratingList _rating, string groupNumber) {
 
 
 	file << " Средняя оценка \"" << groupNumber << "\" группы: ";
+	cout << "\t Средняя оценка \"" << groupNumber << "\" группы: ";
 
 	if (average == 0) {
-		return 0;
+		return false;
 		file << 0;
+		cout << 0 << endl;
 	}
 
 	file << average / (double)counter;
+	cout << average / (double)counter << endl;;
 
-	return average / (double) counter;
+	return true;
 }
 
 // Метод вывода стреднего балла по факультету
-double reports::getFacultyAverage(ratingList _rating, studentList _student) {
+bool reports::getFacultyAverage(ratingList _rating, studentList _student) {
+
+	if (_rating.empty()) {
+		return false;
+	}
+
+	if (_student.empty()) {
+		return false;
+	}
+
 	// Файловый поток
 	ofstream file("facultyAverage.txt");
 
@@ -305,13 +359,16 @@ double reports::getFacultyAverage(ratingList _rating, studentList _student) {
 	}
 
 	file << " Средняя оценка факультета: ";
+	cout << "\t Средняя оценка факультета: ";
 
 	if (average == 0) {
-		return 0;
+		return false;
 		file << 0;
+		cout << 0 << endl;
 	}
 
-	file << average / (double)counter;
+	file << average / (double)_student._studentList.size();
+	cout << average / (double)_student._studentList.size() << endl;
 
-	return average / (double)counter;
+	return true;
 }

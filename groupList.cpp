@@ -10,7 +10,7 @@ bool groupList::read(studentList _student, string filename) {
 	string _group;
 
 	if (!file) {
-		cerr << "\n Не удалось открыть файл!" << endl;
+		cerr << " Не удалось открыть файл!" << endl;
 		return false;
 	}
 
@@ -54,7 +54,7 @@ bool groupList::write(string filename) {
 
 		// Если не смогли открыть файл
 		if (!file) {
-			cerr << "\n Не удалось открыть файл!" << endl;
+			cerr << " Не удалось открыть файл!" << endl;
 			return false;
 		}
 
@@ -73,16 +73,8 @@ bool groupList::write(string filename) {
 
 // Публичный метод добавления группы в список
 bool groupList::create(studentList _student) {
-	// Просим ввести специальность
-	cout << " Введите специальность: ";
-	cin.ignore();
-	getline(cin, this->speciality);
-	// Вводим номер группы
-	cout << " Введите номер группы: ";
-	cin >> this->group;
-	// Вводим курс
-	cout << " Введите курс: ";
-	cin >> this->course;
+
+	this->input();
 
 	// Проверка есть ли такая группа
 	if (checkGroup(this->group)) {
@@ -104,16 +96,29 @@ bool groupList::update(int id, studentList _student) {
 	}
 	// Выводим найденную группу
 	map<string, string> element = this->_groupList[id - 1];
-	cout << " Группы " << " \"#" << id << " " << this->assemblyString(element) << "\" найдена" << endl;
+	cout << " Группа " << " \"#" << id << " " << this->assemblyString(element) << "\" найдена" << endl;
 
-	// Создаем новую группу
-	this->create(_student);
+	// Содержит данные до изменения
+	string temp = element["group"];
 
-	// Меняем местами группы
-	swap(this->_groupList[id - 1], this->_groupList[this->_groupList.size() - 1]);
+	this->input();
 
-	// Удаляем группу в которого нужно внести поправки
-	this->_groupList.erase(_groupList.end() - 1);
+	if (this->group != temp) {
+		// Проверка есть ли такая группа
+		if (checkGroup(this->group)) {
+			cout << " Не удалось добавить! Группа \"" << this->group << "\" существует!" << endl;
+			this->resetVariables(); // Обнуляем временные переменные;
+			return false;
+		} 
+	}
+
+
+	element["group"] = this->group; // Группы
+	element["course"] = this->course; // Курс
+	element["speciality"] = this->speciality; // Специальность
+
+
+	this->_groupList[id - 1] = element;
 
 	return true;
 }
@@ -152,7 +157,7 @@ bool groupList::output() {
 	for_each(this->_groupList.begin(), this->_groupList.end(),
 		[this, &counter](map<string, string> element) {
 			// Выводим строку в консоль
-			cout << " #" << counter << " " << this->assemblyString(element) << endl;
+			cout << "\t #" << counter << " " << this->assemblyString(element) << endl;
 			// Увеличиваем счетчик
 			++counter;
 		}
@@ -246,3 +251,16 @@ bool groupList::checkGroup(string groupNumber) {
 	return flag;
 }
 	
+// Метод для считывания строки
+void groupList::input() {
+	// Просим ввести специальность
+	cout << "\t Введите специальность: ";
+	cin.ignore();
+	getline(cin, this->speciality);
+	// Вводим номер группы
+	cout << "\t Введите номер группы: ";
+	cin >> this->group;
+	// Вводим курс
+	cout << "\t Введите курс: ";
+	cin >> this->course;
+}

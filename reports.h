@@ -10,7 +10,7 @@ class reports {
 	public:
 
 		// Метод вывода дисциплин для сдачи конкретной группы
-		bool getGroupDiscipline(string groupNumber, deliveryDisciplines _deliveryDisciplines);
+		bool getGroupDiscipline(string groupNumber, deliveryDisciplines _deliveryDisciplines, groupList _groups);
 
 		// Метод вывода дисциплин всего факультета
 		bool getFacultyDescipline(deliveryDisciplines _deliveryDisciplines);
@@ -25,10 +25,10 @@ class reports {
 		bool getStudentNotPassSession(ratingList _rating);
 
 		// Метод вывода среднего балла по группе
-		double getGroupAverage(ratingList _rating, string groupNumber);
+		bool getGroupAverage(ratingList _rating, string groupNumber);
 
 		// Метод вывода стреднего балла по факультету
-		double getFacultyAverage(ratingList _rating, studentList _student);
+		bool getFacultyAverage(ratingList _rating, studentList _student);
 
 	private:
 

@@ -17,7 +17,7 @@ class deliveryDisciplines {
 		bool remove(string groupNumber);
 
 		// Публичный метод вывода дисциплин для группы
-		void output(string groupNumber);
+		bool output(string groupNumber);
 	private:
 
 		string group; // Группа
@@ -25,7 +25,7 @@ class deliveryDisciplines {
 		string deliveryType; // Тип сдачи экзамен/зачет/курсовая
 		string deliveryDate; // Дата сдачи экзамена
 
-		// Хранит данные об одной дисциплине
+		// Хранит данные об одной дисциплине  // ВЫКИНУТЬ
 		struct discipline
 		{
 			string name; // Имя дисциплины

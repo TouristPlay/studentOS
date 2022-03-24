@@ -2,16 +2,33 @@
 
 #include "studentList.h"
 #include "deliveryDisciplines.h"
+#include "groupList.h"
 
 
 // Метод для добавления оценок студенту
-bool ratingList::create(string group, deliveryDisciplines _disciplineList, studentList _studentList) {
+bool ratingList::create(string group, deliveryDisciplines _disciplineList, studentList _studentList, groupList _group) {
+
+	
+	// Группы не существует
+	if (!_group.checkGroup(group)) {
+		cout << " Группы \"" << group << "\" не существует!" << endl;
+		return false;
+	}
+
+	// Если у группы не заданы дисциплины
+	if (_disciplineList._deliveryDisciplines.find(group) == _disciplineList._deliveryDisciplines.end()) {
+		cout << " Дисциплины для сдачи не заданны у \"" << group << "\" группы!" << endl;
+		return false;
+	}
 
 	// Заполняем список дисциплин для каждого студента 
 	insertAllStudent(group, _disciplineList, _studentList);
 
 	// Выводим всех студентов опредленной группы
-	this->findStudent(group, _studentList);
+	if (!this->findStudent(group, _studentList)) {
+		cout << " Студентов в данной группе нет!" << endl;
+		return false;
+	}
 
 	int studentID; // ID студента
 	int disciplineID; // ID дисциплины
@@ -20,7 +37,7 @@ bool ratingList::create(string group, deliveryDisciplines _disciplineList, stude
 	cin >> studentID;
 
 	// Проверяем есть ли такой ID в списке
-	if ((unsigned)studentID > _studentList._studentList.size() || studentID < 1 || _studentList._studentList[studentID - 1]["group"] != "241") {
+	if ((unsigned)studentID > _studentList._studentList.size() || studentID < 1 || _studentList._studentList[studentID - 1]["group"] != group) {
 		cout << " Студента с ID-" << studentID << " не существует" << endl;
 		return false;
 	}
@@ -82,21 +99,25 @@ bool ratingList::create(string group, deliveryDisciplines _disciplineList, stude
 	} while (status != "N");
 
 
-	return false;
+	return true;
 }
 
 // Метод для поиска студентов опредленной группы
-void ratingList::findStudent(string group, studentList _studentList) {
+bool ratingList::findStudent(string group, studentList _studentList) {
 	int counter = 1;
+	bool flag = false;
 	for_each(_studentList._studentList.begin(), _studentList._studentList.end(), 
-		[&counter, &_studentList, group](map<string, string> element) {
+		[&counter, &_studentList, group, &flag](map<string, string> element) {
 			// Выводим всех студентов данной группы 
 			if (element["group"] == group) {
 				cout << " #" << counter << _studentList.assemblyString(element) << endl;
+				flag = true;
 			}
 			++counter;
 		}
 	);
+
+	return flag;
 }
 
 // Метод получения имени студента по ID 
@@ -143,6 +164,7 @@ bool ratingList::insertAllStudent(string group, deliveryDisciplines _disciplineL
 	return true;
 }
 
-// Проверят есть ли группа в классе груп checkGroup
-// Проверка на двойной  ввод
-// Записыват все дисциплины в поток
+// Метод проверки пуст ли списко оценок 
+bool ratingList::empty() {
+	return this->_ratingList.empty();
+}

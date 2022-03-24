@@ -52,6 +52,7 @@ bool disciplineList::write(string filename) {
 bool disciplineList::create() {
 	// Просим ввести специальность
 	cout << " Введите дисциплину: ";
+	cin.ignore();
 	getline(cin, this->disciplineName);
 
 
@@ -107,7 +108,7 @@ bool disciplineList::output() {
 	for_each(this->_disciplineList.begin(), this->_disciplineList.end(),
 		[&counter](string element) {
 			// Выводим строку в консоль
-			cout << " #" << counter << " " << element << endl;
+			cout << "\t #" << counter << " " << element << endl;
 			// Увеличиваем счетчик
 			++counter;
 		}

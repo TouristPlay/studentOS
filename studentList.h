@@ -61,7 +61,7 @@ class studentList {
 		bool checkGroup(string groupNumber, groupList _group);
 
 		// Вектор хранит информацию о студентах
-		vector<map<string, string>> _studentList;
+		vector<map<string, string>> _studentList; // Классом
 
 		// Объявялем дружественный класс
 		friend ratingList;

@@ -7,6 +7,8 @@ bool deliveryDisciplines::create(disciplineList _discipline, string groupNumber)
 
 	string status = "Y";
 
+	_discipline.output();
+
 	do {
 
 		cout << " Группа \"" << groupNumber << "\"" << endl;
@@ -131,7 +133,13 @@ bool deliveryDisciplines::remove(string groupNumber) {
 };
 
 // Публичный метод вывода дисциплин для группы
-void deliveryDisciplines::output(string groupNumber) {
+bool deliveryDisciplines::output(string groupNumber) {
+
+	// Если списко пуст
+	if (this->empty()) {
+		return false;
+	}
+
 	// Находим нужную ячейку в списке
 	this->element = this->_deliveryDisciplines.find(groupNumber);
 
@@ -139,11 +147,12 @@ void deliveryDisciplines::output(string groupNumber) {
 	// Выводим дисциплины
 	for_each(this->element->second.begin(), this->element->second.end(), 
 		[&counter](discipline item) {
-			cout << left << " #" << counter << " | " << setw(25) << item.name << " | " << setw(15) << item.type << " | " << item.date << endl;
+			cout << left << "\t #" << counter << " | " << setw(25) << item.name << " | " << setw(15) << item.type << " | " << item.date << endl;
 			++counter;
 		}
 	);
 
+	return true;
 };
 
 // Приватный метод добавления дисциплины в список сдачи

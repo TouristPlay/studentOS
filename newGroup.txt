@@ -1,2 +1,0 @@
- 341 3 Computer Science and calculating machine
- 391 3 нформационная безопасность

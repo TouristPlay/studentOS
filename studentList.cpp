@@ -152,7 +152,7 @@ bool studentList::output() {
 	for_each(this->_studentList.begin(), this->_studentList.end(),
 		[this, &counter](map<string, string> element) {
 			// Выводим строку в консоль
-			cout << " #" << counter << " " << this->assemblyString(element) << endl;
+			cout << "\t #" << counter << " " << this->assemblyString(element) << endl;
 			// Увеличиваем счетчик
 			++counter;
 		}

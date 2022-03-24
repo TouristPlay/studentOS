@@ -4,6 +4,7 @@
 class deliveryDisciplines;
 class studentList;
 class reports;
+class groupList;
 
 // Класс учета успеваемости
 class ratingList {
@@ -11,7 +12,7 @@ class ratingList {
 	public:
 
 		// Метод для добавления оценок студенту
-		bool create(string group, deliveryDisciplines _disciplineList, studentList _studentList);
+		bool create(string group, deliveryDisciplines _disciplineList, studentList _studentList, groupList _group);
 
 	private:
 
@@ -24,7 +25,7 @@ class ratingList {
 		rating _ratingInfo;
 
 		// Метод для поиска студентов опредленной группы
-		void findStudent(string group, studentList _studentList);
+		bool findStudent(string group, studentList _studentList);
 
 		// Метод проверяет есть ли такая дисциплина
 
@@ -34,6 +35,8 @@ class ratingList {
 		// Метод добавляет всех студентов и дисциплины в список
 		bool insertAllStudent(string group, deliveryDisciplines _disciplineList, studentList _studentList);
 
+		// Метод проверки пуст ли списко оценок 
+		bool empty();
 
 		map<string, map<string, vector<rating>>> _ratingList;
 		//map<группа, map<студент, vector<дисциплина, оценка>>
