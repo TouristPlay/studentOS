@@ -1,11 +1,12 @@
 #include "library.h"
 
-class deliveryDisciplines;
+class discipline;
+class studentList;
+class groupList;
 
-// Класс дисциплин
 class disciplineList {
-	public: // Публичная область класса
 
+	public:
 		// Публиный метод чтения списка дисциплин из файла
 		bool read(string filename = "discipline");
 
@@ -16,26 +17,34 @@ class disciplineList {
 		bool create();
 
 		// Публиный методизменения информации о группе
-		bool update(int id);
+		bool update(unsigned id);
 
 		// Публиный метод удаление информации о группе
-		bool remove(int id);
+		bool remove(unsigned id);
 
 		// Публиный метод вывода списка групп в консоль
 		bool output();
 
-
-	private: // Закрытая область класса
+	private:
 
 		string disciplineName;
 
 		// Приватный метод для проверки пуст ли список дисциплин
 		bool empty();
 
-		// Список дисциплин
-		vector<string> _disciplineList;
+		// Метод получение дисциплина по ID
+		discipline &getDisciplineByID(unsigned ID);
 
-		// Объявляем дружественный класс
-		friend deliveryDisciplines;
+		// Метод проверки, если ли уже такая дисциплина
+		bool checkDiscipline(string disciplineName);
+
+		// Метод для проверки существует ли такой ID
+		bool checkID(unsigned ID);
+
+		// Список дисциплин
+		vector<discipline> _disciplineList;
+
+		friend groupList;
+		friend studentList;
 };
 

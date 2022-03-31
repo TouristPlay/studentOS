@@ -1,181 +1,173 @@
 #include "library.h"
 
-// Объявление классов
 #include "studentList.h"
-#include "groupList.h"
 #include "disciplineList.h"
-#include "deliveryDisciplines.h"
-#include "ratingList.h"
-#include "reports.h"
+#include "groupList.h"
 
 
 class menu {
-	public:
+public:
 
-		// Функция для вывода основного меню
-		void main() {
+	// Функция для вывода основного меню
+	void main() {
 
-			// Выводим шапку
-			header();
+		// Выводим шапку
+		header();
 
-			cout << " Главное меню" << endl;
-			cout << "\n Выберите пункт меню: " << endl;
+		cout << " Главное меню" << endl;
+		cout << "\n Выберите пункт меню: " << endl;
 
-			cout << "\t 1. Группы" << endl;
-			cout << "\t 2. Студенты" << endl;
-			cout << "\t 3. Дисциплины" << endl;
-			cout << "\t 4. Сессия" << endl;
-			cout << "\t 5. Оценки" << endl;
-			cout << "\t 6. Отчеты" << endl;
+		cout << "\t 1. Группы" << endl;
+		cout << "\t 2. Студенты" << endl;
+		cout << "\t 3. Дисциплины" << endl;
+		cout << "\t 4. Сессия" << endl;
+		cout << "\t 5. Оценки" << endl;
+		cout << "\t 6. Отчеты" << endl;
 
-			cout << endl;
-
-
-
-		}
-
-
-		// Функция вывода меню пункта групп
-		void group() {
-
-			// Выводим шапку
-			header();
-
-			cout << " Главное меню --> Группы" << endl;
-			cout << "\n Выберите пункт меню: " << endl;
-
-			cout << "\t 1. Считать с файла" << endl;
-			cout << "\t 2. Запись в файл" << endl;
-			cout << "\t 3. Добавить группу" << endl;
-			cout << "\t 4. Обновить группу" << endl;
-			cout << "\t 5. Удалить группу" << endl;
-			cout << "\t 6. Вывести список" << endl;
-			cout << "\t 0. Назад" << endl;
-
-			cout << endl;
-		}
-
-
-		// Функция вывода меню пункта студенты
-		void student() {
-
-			// Выводим шапку
-			header();
-
-			cout << " Главное меню --> Студенты" << endl;
-			cout << "\n Выберите пункт меню: " << endl;
-
-			cout << "\t 1. Считать с файла" << endl;
-			cout << "\t 2. Запись в файл" << endl;
-			cout << "\t 3. Добавить студента" << endl;
-			cout << "\t 4. Обновить студента" << endl;
-			cout << "\t 5. Удалить студента" << endl;
-			cout << "\t 6. Вывести список" << endl;
-			cout << "\t 0. Назад" << endl;
-
-			cout << endl;
-		}
-
-		// Функция вывода меню пункта дисциплины
-		void discipline() {
-
-			// Выводим шапку
-			header();
-
-			cout << " Главное меню --> Дисциплины" << endl;
-			cout << "\n Выберите пункт меню: " << endl;
-
-			cout << "\t 1. Считать с файла" << endl;
-			cout << "\t 2. Запись в файл" << endl;
-			cout << "\t 3. Добавить дисциплины" << endl;
-			cout << "\t 4. Обновить дисциплину" << endl;
-			cout << "\t 5. Удалить дисциплину" << endl;
-			cout << "\t 6. Вывести список" << endl;
-			cout << "\t 0. Назад" << endl;
-
-			cout << endl;
-		}
-
-		// Функция вывода меню пункта сессия
-		void delivery() {
-
-			// Выводим шапку
-			header();
-
-			cout << " Главное меню --> Сессия" << endl;
-			cout << "\n Выберите пункт меню: " << endl;
-
-			cout << "\t 1. Добавить дисциплины" << endl;
-			cout << "\t 2. Обновить дисциплину" << endl;
-			cout << "\t 3. Удалить дисциплину" << endl;
-			cout << "\t 4. Вывести список" << endl;
-			cout << "\t 0. Назад" << endl;
-
-			cout << endl;
-		}
-
-
-		// Функция вывода меню пункта оценки
-		void rating() {
-
-			// Выводим шапку
-			header();
-
-			cout << " Главное меню --> Оценки" << endl;
-			cout << "\n Выберите пункт меню: " << endl;
-
-			cout << "\t 1. Добавить оценки" << endl;
-			cout << "\t 0. Назад" << endl;
-
-			cout << endl;
-		}
+		cout << endl;
 
 
 
-		// Функция вывода меню пункта оценки
-		void report() {
-
-			// Выводим шапку
-			header();
-
-			cout << "\t 1. Дисциплины группы" << endl;
-			cout << "\t 2. Дисциплины факультета " << endl;
-			cout << "\t 3. Оценки студента" << endl;
-			cout << "\t 4. Оценки группы" << endl;
-			cout << "\t 5. Список заваливших сессию" << endl;
-			cout << "\t 6. Средняя оценка по группе" << endl;
-			cout << "\t 7. Средняя оценка по факультету" << endl;
-			cout << "\t 0. Назад" << endl;
-
-			cout << endl;
-		}
+	}
 
 
-	private:
+	// Функция вывода меню пункта групп
+	void group() {
 
-		// Функция шапки OS
-		void header() {
+		// Выводим шапку
+		header();
 
-			// Шапка меню
-			cout << "**********************************************************************" << endl;
-			cout << endl;
+		cout << " Главное меню --> Группы" << endl;
+		cout << "\n Выберите пункт меню: " << endl;
 
-			cout << setw(40) << "_StudentOS_" << endl;
-			cout << setw(48) << "product by TouristTechology" << endl;
+		cout << "\t 1. Считать с файла" << endl;
+		cout << "\t 2. Запись в файл" << endl;
+		cout << "\t 3. Добавить группу" << endl;
+		cout << "\t 4. Обновить группу" << endl;
+		cout << "\t 5. Удалить группу" << endl;
+		cout << "\t 6. Вывести список" << endl;
+		cout << "\t 0. Назад" << endl;
 
-			cout << endl;
-			cout << "**********************************************************************" << endl;
+		cout << endl;
+	}
 
-			cout << endl;
-		}
+
+	// Функция вывода меню пункта студенты
+	void student() {
+
+		// Выводим шапку
+		header();
+
+		cout << " Главное меню --> Студенты" << endl;
+		cout << "\n Выберите пункт меню: " << endl;
+
+		cout << "\t 1. Считать с файла" << endl;
+		cout << "\t 2. Запись в файл" << endl;
+		cout << "\t 3. Добавить студента" << endl;
+		cout << "\t 4. Обновить студента" << endl;
+		cout << "\t 5. Удалить студента" << endl;
+		cout << "\t 6. Вывести список" << endl;
+		cout << "\t 0. Назад" << endl;
+
+		cout << endl;
+	}
+
+	// Функция вывода меню пункта дисциплины
+	void discipline() {
+
+		// Выводим шапку
+		header();
+
+		cout << " Главное меню --> Дисциплины" << endl;
+		cout << "\n Выберите пункт меню: " << endl;
+
+		cout << "\t 1. Считать с файла" << endl;
+		cout << "\t 2. Запись в файл" << endl;
+		cout << "\t 3. Добавить дисциплины" << endl;
+		cout << "\t 4. Обновить дисциплину" << endl;
+		cout << "\t 5. Удалить дисциплину" << endl;
+		cout << "\t 6. Вывести список" << endl;
+		cout << "\t 0. Назад" << endl;
+
+		cout << endl;
+	}
+
+	// Функция вывода меню пункта сессия
+	void delivery() {
+
+		// Выводим шапку
+		header();
+
+		cout << " Главное меню --> Сессия" << endl;
+		cout << "\n Выберите пункт меню: " << endl;
+
+		cout << "\t 1. Добавить дисциплины" << endl;
+		cout << "\t 2. Обновить дисциплину" << endl;
+		cout << "\t 3. Удалить дисциплину" << endl;
+		cout << "\t 4. Вывести список" << endl;
+		cout << "\t 0. Назад" << endl;
+
+		cout << endl;
+	}
+
+
+	// Функция вывода меню пункта оценки
+	void rating() {
+
+		// Выводим шапку
+		header();
+
+		cout << " Главное меню --> Оценки" << endl;
+		cout << "\n Выберите пункт меню: " << endl;
+
+		cout << "\t 1. Добавить оценки" << endl;
+		cout << "\t 0. Назад" << endl;
+
+		cout << endl;
+	}
+
+
+
+	// Функция вывода меню пункта оценки
+	void report() {
+
+		// Выводим шапку
+		header();
+
+		cout << "\t 1. Дисциплины группы" << endl;
+		cout << "\t 2. Дисциплины факультета " << endl;
+		cout << "\t 3. Оценки студента" << endl;
+		cout << "\t 4. Оценки группы" << endl;
+		cout << "\t 5. Список заваливших сессию" << endl;
+		cout << "\t 6. Средняя оценка по группе" << endl;
+		cout << "\t 7. Средняя оценка по факультету" << endl;
+		cout << "\t 0. Назад" << endl;
+
+		cout << endl;
+	}
+
+
+private:
+
+	// Функция шапки OS
+	void header() {
+
+		// Шапка меню
+		cout << "**********************************************************************" << endl;
+		cout << endl;
+
+		cout << setw(40) << "_StudentOS_" << endl;
+		cout << setw(48) << "product by TouristTechology" << endl;
+
+		cout << endl;
+		cout << "**********************************************************************" << endl;
+
+		cout << endl;
+	}
 };
-
 
 // Функция для продолжения вывода
 void proceed();
-
-
-//!!!! Изменить дружественные классы на методы !!!!
 
 int main() {
 
@@ -185,14 +177,10 @@ int main() {
 	//Ставим заголовок консоли
 	SetConsoleTitle(L"StudentOS by TouristTechology");
 
-
 	// Создаем объекты
 	groupList group;
 	studentList student;
 	disciplineList discipline;
-	deliveryDisciplines delivery;
-	ratingList rating;
-	reports _reports;
 	menu _menu;
 
 	// Вспомогательные перменные для меню
@@ -212,607 +200,657 @@ int main() {
 		cin >> menuItem;
 
 		switch (menuItem) {
-			case 1: // Выводим меню групп
+		case 1: // Выводим меню групп
 
-				do {
-					system("cls");
-					_menu.group();
-
-
-					cout << " Введите пункт меню: ";
-					cin >> menuItem;
-
-					switch (menuItem) {
-						case 1: // Считываение с файла
-							cout << " Файл считывание по умолчанию group. Изменить? [Y/N]: ";
-							cin >> change;
-
-							if (change == "Y") {
-								cout << " Введите имя файла: ";
-								cin >> filename;
-								flag = group.read(student, filename);
-							}
-							else {
-								flag = group.read(student);
-							}
+			do {
+				system("cls");
+				_menu.group();
 
 
-							if (flag) {
-								cout << " Файл успешно считан" << endl;
-							}
-							
+				cout << " Введите пункт меню: ";
+				cin >> menuItem;
 
-							// Продолжения работы
-							proceed();
+				switch (menuItem) {
+				case 1: // Считываение с файла
+					cout << " Файл считывание по умолчанию group. Изменить? [Y/N]: ";
+					cin >> change;
 
-							break;	
-						case 2:	// Запись в  файл
-							cout << " Файл записи по умолчанию newGroup. Изменить? [Y/N]: ";
-							cin >> change;
-
-							if (change == "Y") {
-								cout << " Введите имя файла: ";
-								cin >> filename;
-								flag = group.write(filename);
-							}
-							else {
-								flag = group.write();
-							}
-
-							if (flag) {
-								cout << " Список записан в файл" << endl;
-							} else {
-								cout << " Список пуст!" << endl;
-							}
-
-							// Продолжения работы
-							proceed();
-
-							break;
-						case 3: // Добавить группу
-							
-							if (group.create(student)) {
-								cout << " Группа успешно добавлена в список" << endl;
-							}
-
-							// Продолжения работы
-							proceed();
-
-							break;			
-						case 4: // Обновить группу
-
-							group.output();
-							cout << endl;
-
-							cout << " Введите ID группы: ";
-							cin >> id;
-
-							if (group.update(id, student) == false) {
-								cout << " Список пуст или группы не существует!" << endl;
-							}
-
-							// Продолжения работы
-							proceed();
-
-							break;
-						case 5: // Удалить группу
-							
-							group.output();
-							cout << endl;
-
-							cout << " Введите ID группы: ";
-							cin >> id;
-
-							if (group.remove(id, student) == false) {
-								cout << " Список пуст или группы не существует!" << endl;
-							}
-
-							// Продолжения работы
-							proceed();
-
-							break;
-						case 6: // Вывести список
-							
-
-							if (group.output() == false) {
-								cout << " Список пуст!" << endl;
-							}
-
-							// Продолжения работы
-							proceed();
-
-							break;
-						// Назад
-						case 0:
-
-							break;
-
-						default:
-							cout << " Такого пункта меню не существует!" << endl;
-							break;
+					if (change == "Y") {
+						cout << " Введите имя файла: ";
+						cin >> filename;
+						flag = group.read(filename);
+					}
+					else {
+						flag = group.read();
 					}
 
 
-				} while (menuItem != 0);
+					if (flag) {
+						cout << " Файл успешно считан" << endl;
+					}
 
 
-				break;
-			case 2:// Выводим меню студентов
-				
-				do {
-					system("cls");
-					_menu.student();
+					// Продолжения работы
+					proceed();
 
+					break;
+				case 2:	// Запись в  файл
+					cout << " Файл записи по умолчанию newGroup. Изменить? [Y/N]: ";
+					cin >> change;
 
-					cout << " Введите пункт меню: ";
-					cin >> menuItem;
+					if (change == "Y") {
+						cout << " Введите имя файла: ";
+						cin >> filename;
+						flag = group.write(filename);
+					}
+					else {
+						flag = group.write();
+					}
 
-					switch (menuItem) {
-						case 1: // Считываение с файла
-							cout << " Файл считывание по умолчанию student. Изменить? [Y/N]: ";
-							cin >> change;
+					if (flag) {
+						cout << " Список записан в файл" << endl;
+					}
+					else {
+						cout << " Список пуст!" << endl;
+					}
 
-							if (change == "Y") {
-								cout << " Введите имя файла: ";
-								cin >> filename;
-								flag = student.read(group, filename);
-							}
-							else {
-								flag = student.read(group);
-							}
+					// Продолжения работы
+					proceed();
 
+					break;
+				case 3: // Добавить группу
 
-							if (flag) {
-								cout << " Файл успешно считан" << endl;
-							} 
+					if (group.create()) {
+						cout << " Группа успешно добавлена в список" << endl;
+					}
 
-							// Продолжения работы
-							proceed();
+					// Продолжения работы
+					proceed();
 
-							break;
-						case 2:	// Запись в  файл
-							cout << " Файл записи по умолчанию newStudent. Изменить? [Y/N]: ";
-							cin >> change;
+					break;
+				case 4: // Обновить группу
 
-							if (change == "Y") {
-								cout << " Введите имя файла: ";
-								cin >> filename;
-								flag = student.write(filename);
-							}
-							else {
-								flag = student.write();
-							}
+					group.output();
+					cout << endl;
 
-							if (flag) {
-								cout << " Список записан в файл" << endl;
-							}
-							else {
-								cout << " Список пуст" << endl;
-							}
+					cout << " Введите ID группы: ";
+					cin >> id;
 
-							// Продолжения работы
-							proceed();
+					if (group.update(id) == false) {
+						cout << " Список пуст или группы не существует!" << endl;
+					}
 
-							break;
-						case 3: // Добавить студента
+					// Продолжения работы
+					proceed();
 
-							if (student.create(group)) {
-								cout << " Студент успешно добавлена в список" << endl;
-							}
+					break;
+				case 5: // Удалить группу
 
-							// Продолжения работы
-							proceed();
+					group.output();
+					cout << endl;
 
-							break;
-						case 4: // Обновить студента
+					cout << " Введите ID группы: ";
+					cin >> id;
 
-							student.output();
-							cout << endl;
+					if (group.remove(id, student) == false) {
+						cout << " Список пуст или группы не существует!" << endl;
+					}
 
-							cout << " Введите ID группы: ";
-							cin >> id;
+					// Продолжения работы
+					proceed();
 
-							if (student.update(id, group) == false) {
-								cout << " Список пуст или студента не существует!" << endl;
-							}
+					break;
+				case 6: // Вывести список
 
-							// Продолжения работы
-							proceed();
 
-							break;
-						case 5: // Удалить студента
+					if (group.output() == false) {
+						cout << " Список пуст!" << endl;
+					}
 
-							student.output();
-							cout << endl;
+					// Продолжения работы
+					proceed();
 
-							cout << " Введите ID группы: ";
-							cin >> id;
+					break;
+					// Назад
+				case 0:
 
-							if (student.remove(id) == false) {
-								cout << " Список пуст или студента не существует!" << endl;
-							}
+					break;
 
-							// Продолжения работы
-							proceed();
+				default:
+					cout << " Такого пункта меню не существует!" << endl;
+					break;
+				}
 
-							break;
-						case 6: // Вывести список
 
+			} while (menuItem != 0);
 
-							if (student.output() == false) {
-								cout << " Список пуст!" << endl;
-							}
 
-							// Продолжения работы
-							proceed();
+			break;
+		case 2:// Выводим меню студентов
+
+			do {
+				system("cls");
+				_menu.student();
+
+
+				cout << " Введите пункт меню: ";
+				cin >> menuItem;
+
+				switch (menuItem) {
+				case 1: // Считываение с файла
+					cout << " Файл считывание по умолчанию student. Изменить? [Y/N]: ";
+					cin >> change;
+
+					if (change == "Y") {
+						cout << " Введите имя файла: ";
+						cin >> filename;
+						flag = student.read(group, filename);
+					}
+					else {
+						flag = student.read(group);
+					}
 
-							break;
-							// Назад
-						case 0:
+
+					if (flag) {
+						cout << " Файл успешно считан" << endl;
+					}
+
+					// Продолжения работы
+					proceed();
 
-							break;
+					break;
+				case 2:	// Запись в  файл
+					cout << " Файл записи по умолчанию newStudent. Изменить? [Y/N]: ";
+					cin >> change;
 
-						default:
-							cout << " Такого пункта меню не существует!" << endl;
-							break;
-						}
-				} while (menuItem != 0);
+					if (change == "Y") {
+						cout << " Введите имя файла: ";
+						cin >> filename;
+						flag = student.write(filename);
+					}
+					else {
+						flag = student.write();
+					}
 
+					if (flag) {
+						cout << " Список записан в файл" << endl;
+					}
+					else {
+						cout << " Список пуст" << endl;
+					}
 
-				break;
-			case 3: // Выводим меню дисциплин
-				
-				do {
-					system("cls");
-					_menu.discipline();
+					// Продолжения работы
+					proceed();
 
+					break;
+				case 3: // Добавить студента
 
-					cout << " Введите пункт меню: ";
-					cin >> menuItem;
+					if (student.create(group)) {
+						cout << " Студент успешно добавлена в список" << endl;
+					}
 
-					switch (menuItem) {
-						case 1: // Считываение с файла
-							cout << " Файл считывание по умолчанию discipline. Изменить? [Y/N]: ";
-							cin >> change;
+					// Продолжения работы
+					proceed();
 
-							if (change == "Y") {
-								cout << " Введите имя файла: ";
-								cin >> filename;
-								flag = discipline.read(filename);
-							}
-							else {
-								flag = discipline.read();
-							}
+					break;
+				case 4: // Обновить студента
 
+					if (!student.output()) {
+						cout << " Список пуст!" << endl;
+						// Продолжения работы
+						proceed();
+						break;
+					}
+					cout << endl;
+
+					cout << " Введите ID студента: ";
+					cin >> id;
 
-							if (flag) {
-								cout << " Файл успешно считан" << endl;
-							}
+					if (!student.update(id)) {
+						cout << " Студента не существует!" << endl;
+					}
+
+					// Продолжения работы
+					proceed();
+
+					break;
+				case 5: // Удалить студента
+
+					if (!student.output()) {
+						cout << " Список пуст!" << endl;
+						// Продолжения работы
+						proceed();
+						break;
+					}
+					cout << endl;
+
+					cout << " Введите ID студента: ";
+					cin >> id;
+
+					if (!student.remove(id)) {
+						cout << " Студента не существует!" << endl;
+					}
+
+					// Продолжения работы
+					proceed();
+
+					break;
+				case 6: // Вывести список
+
+
+					if (!student.output()) {
+						cout << " Список пуст!" << endl;
+					}
+
+					// Продолжения работы
+					proceed();
+
+					break;
+					// Назад
+				case 0:
+
+					break;
+
+				default:
+					cout << " Такого пункта меню не существует!" << endl;
+					break;
+				}
+			} while (menuItem != 0);
+
+
+			break;
+		case 3: // Выводим меню дисциплин
+
+			do {
+				system("cls");
+				_menu.discipline();
+
+
+				cout << " Введите пункт меню: ";
+				cin >> menuItem;
+
+				switch (menuItem) {
+				case 1: // Считываение с файла
+					cout << " Файл считывание по умолчанию discipline. Изменить? [Y/N]: ";
+					cin >> change;
 
-							// Продолжения работы
-							proceed();
+					if (change == "Y") {
+						cout << " Введите имя файла: ";
+						cin >> filename;
+						flag = discipline.read(filename);
+					}
+					else {
+						flag = discipline.read();
+					}
 
-							break;
-						case 2:	// Запись в  файл
-							cout << " Файл записи по умолчанию newStudent. Изменить? [Y/N]: ";
-							cin >> change;
 
-							if (change == "Y") {
-								cout << " Введите имя файла: ";
-								cin >> filename;
-								flag = discipline.write(filename);
-							}
-							else {
-								flag = discipline.write();
-							}
+					if (flag) {
+						cout << " Файл успешно считан" << endl;
+					}
 
-							if (flag) {
-								cout << " Список записан в файл" << endl;
-							}
-							else {
-								cout << " Список пуст" << endl;
-							}
+					// Продолжения работы
+					proceed();
 
-							// Продолжения работы
-							proceed();
+					break;
+				case 2:	// Запись в  файл
+					cout << " Файл записи по умолчанию newStudent. Изменить? [Y/N]: ";
+					cin >> change;
 
-							break;
-						case 3: // Добавить дисциплину
+					if (change == "Y") {
+						cout << " Введите имя файла: ";
+						cin >> filename;
+						flag = discipline.write(filename);
+					}
+					else {
+						flag = discipline.write();
+					}
 
-							if (discipline.create()) {
-								cout << " Дисциплина успешно добавлена в список" << endl;
-							}
+					if (flag) {
+						cout << " Список записан в файл" << endl;
+					}
+					else {
+						cout << " Список пуст" << endl;
+					}
 
-							// Продолжения работы
-							proceed();
+					// Продолжения работы
+					proceed();
 
-							break;
-						case 4: // Обновить дисциплину
+					break;
+				case 3: // Добавить дисциплину
 
-							discipline.output();
-							cout << endl;
+					if (discipline.create()) {
+						cout << " Дисциплина успешно добавлена в список" << endl;
+					}
 
-							cout << " Введите ID группы: ";
-							cin >> id;
+					// Продолжения работы
+					proceed();
 
-							if (discipline.update(id) == false) {
-								cout << " Список пуст или дисциплины не существует!" << endl;
-							}
+					break;
+				case 4: // Обновить дисциплину
 
-							// Продолжения работы
-							proceed();
+					if (!discipline.output()) {
+						cout << " Список пуст!" << endl;
+						// Продолжения работы
+						proceed();
+						break;
+					}
+					cout << endl;
 
-							break;
-						case 5: // Удалить дисциплину
+					cout << " Введите ID дисциплины: ";
+					cin >> id;
 
-							discipline.output();
-							cout << endl;
+					if (discipline.update(id) == false) {
+						cout << " Список пуст или дисциплины не существует!" << endl;
+					}
 
-							cout << " Введите ID группы: ";
-							cin >> id;
+					// Продолжения работы
+					proceed();
 
-							if (discipline.remove(id) == false) {
-								cout << " Список пуст или дисциплины не существует!" << endl;
-							}
+					break;
+				case 5: // Удалить дисциплину
 
-							// Продолжения работы
-							proceed();
+					if (!discipline.output()) {
+						cout << " Список пуст!" << endl;
+						// Продолжения работы
+						proceed();
+						break;
+					}
+					cout << endl;
 
-							break;
-						case 6: // Вывести список
+					cout << " Введите ID дисциплины: ";
+					cin >> id;
 
+					if (discipline.remove(id) == false) {
+						cout << " Список пуст или дисциплины не существует!" << endl;
+					}
 
-							if (discipline.output() == false) {
-								cout << " Список пуст!" << endl;
-							}
+					// Продолжения работы
+					proceed();
 
-							// Продолжения работы
-							proceed();
+					break;
+				case 6: // Вывести список
 
-							break;
-							// Назад
-						case 0:
 
-							break;
+					if (discipline.output() == false) {
+						cout << " Список пуст!" << endl;
+					}
 
-						default:
-							cout << " Такого пункта меню не существует!" << endl;
-							break;
-						}
-				} while (menuItem != 0);
+					// Продолжения работы
+					proceed();
 
-				break;
-			case 4:// Выводим меню дисциплин для сдачи
-				
-				do {
-					system("cls");
-					_menu.delivery();
+					break;
+					// Назад
+				case 0:
 
+					break;
 
-					cout << " Введите пункт меню: ";
-					cin >> menuItem;
+				default:
+					cout << " Такого пункта меню не существует!" << endl;
+					break;
+				}
+			} while (menuItem != 0);
 
-					switch (menuItem) {
-						case 1: // Добавить дисциплину
+			break;
+		case 4:// Выводим меню дисциплин для сдачи
 
-							cout << " Введие номер группы: ";
-							cin >> groupNumber;
+			do {
+				system("cls");
+				_menu.delivery();
 
-							delivery.create(discipline, groupNumber);
 
-							// Продолжения работы
-							proceed();
+				cout << " Введите пункт меню: ";
+				cin >> menuItem;
 
-							break;
-						case 2: // Обновить дисциплину
+				switch (menuItem) {
+				case 1: // Добавить дисциплину
+					if (!group.output()) {
+						cout << " Список пуст" << endl;
+						// Продолжения работы
+						proceed();
+						break;
+					}
 
-							cout << " Введие номер группы: ";
-							cin >> groupNumber;
+					cout << " Введите ID группы: ";
+					cin >> id;
 
-							if (!delivery.output(groupNumber)) {
-								cout << " Список пуст!" << endl;
-								proceed();
-								break;
-							}
-							cout << endl;
+					group.createDiscipline(discipline, student, id);
 
-							cout << " Введите ID группы: ";
-							cin >> id;
+					// Продолжения работы
+					proceed();
 
-							delivery.update(groupNumber);
-
-							// Продолжения работы
-							proceed();
-
-							break;
-						case 3: // Удалить дисциплину
-
-							cout << " Введие номер группы: ";
-							cin >> groupNumber;
-
-							if (!delivery.output(groupNumber)) {
-								cout << " Список пуст!" << endl;
-								proceed();
-								break;
-							}
-							cout << endl;
-
-							cout << " Введите ID группы: ";
-							cin >> id;
-
-							delivery.remove(groupNumber);
-
-							// Продолжения работы
-							proceed();
-
-							break;
-						case 4: // Вывести список
-
-							cout << " Введие номер группы: ";
-							cin >> groupNumber;
-
-							if (delivery.output(groupNumber) == false) {
-								cout << " Список пуст!" << endl;
-							}
-
-							// Продолжения работы
-							proceed();
-
-							break;
+					break;
+				case 2: // Обновить дисциплину
 					
-						case 0:	// Назад
+					if (!group.output()) {
+						cout << " Список пуст" << endl;
+						// Продолжения работы
+						proceed();
+						break;
+					}
 
-							break;
+					cout << " Введие ID группы: ";
+					cin >> id;
 
-						default:
-							cout << " Такого пункта меню не существует!" << endl;
-							break;
-						}
-				} while (menuItem != 0);
+					group.updateDiscipline(id);
 
-				break;
-			case 5: // Выводим меню оценок
-				
-				do {
-					system("cls");
-					_menu.rating();
+					// Продолжения работы
+					proceed();
+
+					break;
+				case 3: // Удалить дисциплину
+					
+					if (!group.output()) {
+						cout << " Список пуст" << endl;
+						// Продолжения работы
+						proceed();
+						break;
+					}
+
+					cout << " Введие ID группы: ";
+					cin >> id;
+
+					group.removeDiscipline(id);
+
+					// Продолжения работы
+					proceed();
+
+					break;
+				case 4: // Вывести список
+
+					if (!group.output()) {
+						cout << " Список пуст" << endl;
+						// Продолжения работы
+						proceed();
+						break;
+					}
+
+					cout << " Введие ID группы: ";
+					cin >> id;
+
+					group.getGroupDiscipline(id);
+
+					// Продолжения работы
+					proceed();
+
+					break;
+
+				case 0:	// Назад
+
+					break;
+
+				default:
+					cout << " Такого пункта меню не существует!" << endl;
+					break;
+				}
+			} while (menuItem != 0);
+
+			break;
+		case 5: // Выводим меню оценок
+
+			do {
+				system("cls");
+				_menu.rating();
 
 
-					cout << " Введите пункт меню: ";
-					cin >> menuItem;
+				cout << " Введите пункт меню: ";
+				cin >> menuItem;
 
-					switch (menuItem) {
-						case 1: // Добавить дисциплину
+				switch (menuItem) {
+				case 1: // Добавить дисциплину
 
-							cout << " Введие номер группы: ";
-							cin >> groupNumber;
+					if (!group.output()) {
+						cout << " Список пуст" << endl;
+						// Продолжения работы
+						proceed();
+						break;
+					}
 
-							rating.create(groupNumber, delivery, student, group);
+					cout << " Введие ID группы: ";
+					cin >> id;
 
-							// Продолжения работы
-							proceed();
+					student.createRating(discipline, group, id);
 
-							break;
-				
-						case 0:	// Назад
+					// Продолжения работы
+					proceed();
 
-							break;
+					break;
 
-						default:
-							cout << " Такого пункта меню не существует!" << endl;
-							break;
+				case 0:	// Назад
+
+					break;
+
+				default:
+					cout << " Такого пункта меню не существует!" << endl;
+					break;
+				}
+
+
+			} while (menuItem != 0);
+
+			break;
+		case 6:// Выводим меню отчетов
+			do {
+				system("cls");
+				_menu.report();
+
+
+				cout << " Введите пункт меню: ";
+				cin >> menuItem;
+
+				switch (menuItem) {
+				case 1: // Дисциплины группы
+
+
+					if (!group.output()) {
+						cout << " Список пуст!" << endl;
+						proceed();
+						break;
+					}
+
+					cout << " Введие ID группы: ";
+					cin >> id;
+
+					if (!group.getGroupDiscipline(id)) {
+						cout << " Список групп или дисциплин пуст!" << endl;
+					}
+
+					// Продолжения работы
+					proceed();
+
+					break;
+				case 2: // Дисциплины факультета
+
+					if (!group.getFacultyDescipline()) {
+						cout << " Список дисциплин или групп пуст!" << endl;
+					}
+
+					// Продолжения работы
+					proceed();
+
+					break;
+				case 3: // Оценки студента
+
+					student.getStudentGrade();
+
+					// Продолжения работы
+					proceed();
+
+					break;
+				case 4: // Оценки группы
+
+					if (!group.output()) {
+						cout << " Список пуст!" << endl;
+						proceed();
+						break;
+					}
+
+					cout << " Введие ID группы: ";
+					cin >> id;
+
+					student.getGroupGrade(id, group);
+
+					// Продолжения работы
+					proceed();
+
+					break;
+				case 5: // Список не сдавших сессию
+
+					if (!student.getStudentNotPassSession()) {
+						cout << " Список оценок или студентов пуст!" << endl;
+					}
+
+					// Продолжения работы
+					proceed();
+
+					break;
+				case 6: // Средняя оценка по группе
+
+					if (!group.output()) {
+						cout << " Список пуст!" << endl;
+						proceed();
+						break;
+					}
+
+					cout << " Введие ID группы: ";
+					cin >> id;
+
+
+					if (!student.getGroupAverage(id, group)) {
+						cout << " Список оценок пуст!" << endl;
+					}
+
+					// Продолжения работы
+					proceed();
+
+					break;
+				case 7: // Средняя оценка по факультету
+
+
+					if (!student.getFacultyAverage()) {
+						cout << " Список оценок или студентов пуст!" << endl;
 					}
 
 
-				} while (menuItem != 0);
+					// Продолжения работы
+					proceed();
 
-				break;
-			case 6:// Выводим меню отчетов
-				do {
-					system("cls");
-					_menu.report();
+					break;
+				case 0:	// Назад
 
+					break;
 
-					cout << " Введите пункт меню: ";
-					cin >> menuItem;
-
-					switch (menuItem) {
-						case 1: // Дисциплины группы
-
-							cout << " Введие номер группы: ";
-							cin >> groupNumber;
-
-							if (!_reports.getGroupDiscipline(groupNumber, delivery, group)) {
-								cout << " Список групп или дисциплин пуст!" << endl;
-							}
-
-							// Продолжения работы
-							proceed();
-
-							break;
-						case 2: // Дисциплины факультета
-
-							if (!_reports.getFacultyDescipline(delivery)) {
-								cout << " Список дисциплин пуст!" << endl;
-							}
-
-							// Продолжения работы
-							proceed();
-
-							break;
-						case 3: // Оценки студента
-
-							if (!_reports.getStudentGrade(rating, student)) {
-								cout << " Список оценок или студентов пуст!" << endl;
-							}
-
-							// Продолжения работы
-							proceed();
-
-							break;
-						case 4: // Список заваливших сессию
-
-							if (!_reports.getGroupGrade(rating, group)) {
-								cout << " Список оценок или группы пуст!" << endl;
-							}
-							
-
-							// Продолжения работы
-							proceed();
-
-							break;
-						case 5: // Средняя оценка по группе
-
-							if (!_reports.getStudentNotPassSession(rating)) {
-								cout << " Список оценок пуст!" << endl;
-							}
-
-							// Продолжения работы
-							proceed();
-
-							break;
-						case 6: // Средняя оценка по факультету
-
-							cout << " Введие номер группы: ";
-							cin >> groupNumber;
+				default:
+					cout << " Такого пункта меню не существует!" << endl;
+					break;
+				}
 
 
-							if (!_reports.getGroupAverage(rating, groupNumber)) {
-								cout << " Список оценок пуст!" << endl;
-							}
+			} while (menuItem != 0);
 
-							// Продолжения работы
-							proceed();
-
-							break;
-						case 7: // Добавить дисциплину
-
-
-							if (!_reports.getFacultyAverage(rating, student)) {
-								cout << " Список оценок или студентов пуст!" << endl;
-							}
-							
-
-							// Продолжения работы
-							proceed();
-
-							break;
-						case 0:	// Назад
-
-							break;
-
-						default:
-							cout << " Такого пункта меню не существует!" << endl;
-							break;
-					}
-
-
-				} while (menuItem != 0);
-
-				break;
-			default:
-				cout << " Такого пункта меню не существует" << endl;
-				break;
+			break;
+		default:
+			cout << " Такого пункта меню не существует" << endl;
+			break;
 		}
 
 	} while (true);

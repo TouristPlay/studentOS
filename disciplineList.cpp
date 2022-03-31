@@ -1,5 +1,7 @@
 #include "disciplineList.h"
 
+#include "discipline.h"
+
 
 // Публиный метод чтения списка дисциплин из файла
 bool disciplineList::read(string filename) {
@@ -15,8 +17,17 @@ bool disciplineList::read(string filename) {
 	while (!file.eof()) {
 		// Считываем строку
 		getline(file, this->disciplineName);
+
+		// Проверка есть ли такая дисциплина
+		if (this->checkDiscipline(this->disciplineName)) {
+			cout << " Дисциплина \"" << this->disciplineName << "\" существует!" << endl;
+			break;
+		}
+
+		discipline tempDiscipline(this->disciplineName);
+
 		// Добавляем в список 
-		this->_disciplineList.push_back(this->disciplineName);
+		this->_disciplineList.push_back(tempDiscipline);
 	}
 
 	return true;
@@ -24,7 +35,6 @@ bool disciplineList::read(string filename) {
 
 // Публиный метод записи списка дисциплин в файл
 bool disciplineList::write(string filename) {
-
 	// Если список не пустой
 	if (!this->empty()) {
 		// Поток для записи 
@@ -36,12 +46,9 @@ bool disciplineList::write(string filename) {
 			return false;
 		}
 
-		// Записываем в файл
-		for_each(this->_disciplineList.begin(), this->_disciplineList.end(),
-			[&file](string element) {
-				file << element << endl;
-			}
-		);
+		for (auto element : this->_disciplineList) {
+			file << element.getName() << endl;
+		}
 
 		return true;
 	}
@@ -55,69 +62,105 @@ bool disciplineList::create() {
 	cin.ignore();
 	getline(cin, this->disciplineName);
 
+	// Проверка есть ли такая дисциплина
+	if (this->checkDiscipline(this->disciplineName)) {
+		cout << " Дисциплина \"" << this->disciplineName << "\" существует!" << endl;
+		return false;
+	}
 
-	//--Проверка есть ли студент в группе--///
+	discipline tempDiscipline(this->disciplineName);
 
-	// Добавляем группы в список
-	this->_disciplineList.push_back(this->disciplineName);
+	// Добавляем в список 
+	this->_disciplineList.push_back(tempDiscipline);
 
 	return true;
 }
 
-// Публиный метод изменения информации о группе
-bool disciplineList::update(int id) {
-	if (empty() || id > (int)this->_disciplineList.size() || id < 0) {
+// Публиный методизменения информации о группе
+bool disciplineList::update(unsigned id) {
+	if (empty() || !this->checkID(id)) {
 		return false;
 	}
-	// Выводим найденную дисциплину
-	cout << " Дисциплина " << " \"#" << id << " " << _disciplineList[id - 1] << "\" найдена" << endl;
 
-	// Создаем новую группу
-	this->create();
+	discipline &temp = this->getDisciplineByID(id);
 
-	// Меняем местами группы
-	swap(this->_disciplineList[id - 1], this->_disciplineList[this->_disciplineList.size() - 1]);
+	// Просим ввести специальность
+	cout << " Введите дисциплину: ";
+	cin.ignore();
+	getline(cin, this->disciplineName);
 
-	// Удаляем группу в которого нужно внести поправки
-	this->_disciplineList.erase(_disciplineList.end() - 1);
+	// Проверка есть ли такая дисциплина
+	if (this->checkDiscipline(this->disciplineName)) {
+		cout << " Дисциплина \"" << this->disciplineName << "\" существует!" << endl;
+		return false;
+	}
+
+	temp.setName(this->disciplineName);
 
 	return true;
 }
 
 // Публиный метод удаление информации о группе
-bool disciplineList::remove(int id) {
-	if (empty() || id > (int)this->_disciplineList.size() || id < 0) {
+bool disciplineList::remove(unsigned id) {
+
+	if (empty() || !this->checkID(id)) {
 		return false;
 	}
-	// Удаляем группу из списка
-	this->_disciplineList.erase(_disciplineList.begin() + id - 1);
+
+	vector<discipline> ::iterator it = remove_if(this->_disciplineList.begin(), this->_disciplineList.end(), 
+		[id](discipline element) {
+			return element.getID() == id;
+		}
+	);
+
+	this->_disciplineList.erase(it, this->_disciplineList.end());
+
 	return true;
 }
 
 // Публиный метод вывода списка групп в консоль
 bool disciplineList::output() {
-
-	if (empty()) {
+	if (this->empty()) {
 		return false;
 	}
 
-	// Счетчик
-	int counter = 1;
+	for (auto element : this->_disciplineList) {
+		cout << "\t #" << element.getID() << " " << element.getName() << endl;
+	}
 
-	// Выводим список дисциплин
-	for_each(this->_disciplineList.begin(), this->_disciplineList.end(),
-		[&counter](string element) {
-			// Выводим строку в консоль
-			cout << "\t #" << counter << " " << element << endl;
-			// Увеличиваем счетчик
-			++counter;
-		}
-	);
 	return true;
 }
-
 
 // Приватный метод для проверки пуст ли список дисциплин
 bool disciplineList::empty() {
 	return this->_disciplineList.empty();
+}
+
+// Метод получение дисциплина по ID
+discipline &disciplineList::getDisciplineByID(unsigned ID) {
+	for (auto &element : this->_disciplineList) {
+		if (element.getID() == ID) {
+			return element;
+		}
+	}
+}
+
+// Метод для проверки существует ли такой ID
+bool disciplineList::checkID(unsigned ID) {
+	for (auto& element : this->_disciplineList) {
+		if (element.getID() == ID) {
+			return true;
+		}
+	}
+	return false;
+}
+
+// Метод проверки, если ли уже такая дисциплина
+bool disciplineList::checkDiscipline(string disciplineName) {
+	for (auto element : this->_disciplineList) {
+		if (element.getName() == disciplineName) {
+			return true;
+		}
+	}
+	return false;
 }

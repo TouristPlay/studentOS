@@ -1,8 +1,10 @@
 #include "groupList.h"
 #include "studentList.h"
+#include "disciplineList.h"
 
-// Публичный метод считывание списка групп
-bool groupList::read(studentList _student, string filename) {
+
+// Метод считывание списка групп
+bool groupList::read(string filename) {
 	// Создаем объект чтения файла
 	ifstream file(filename + ".txt");
 
@@ -21,7 +23,7 @@ bool groupList::read(studentList _student, string filename) {
 
 		// Получаем номер группы
 		positionOne = _group.find(" ", positionTwo + 1);
-		copy(_group.begin(), _group.begin() + positionOne, back_inserter(this->group));
+		copy(_group.begin(), _group.begin() + positionOne, back_inserter(this->groupNumber));
 
 		// Получаем курс
 		positionTwo = _group.find(" ", positionOne + 1);
@@ -31,21 +33,21 @@ bool groupList::read(studentList _student, string filename) {
 		copy(_group.begin() + positionTwo + 1, _group.end(), back_inserter(this->speciality));
 
 		// Проверка есть ли такая группа
-		if (checkGroup(this->group)) {
-			cout << " Не удалось добавить! Группа \"" << this->group << "\" существует!" << endl;
+		if (this->checkGroup(this->groupNumber)) {
+			cout << " Не удалось добавить! Группа \"" << this->groupNumber << "\" существует!" << endl;
 			this->resetVariables(); // Обнуляем временные переменные;
 			continue;
 		}
 
 		// Добавляем группы в список
-		append(this->group, this->course, this->speciality);
+		append(this->groupNumber, this->course, this->speciality);
 	}
 
 
 	return true;
 }
 
-// Публичный метод для записи списка студентов в файл
+// Метод для записи списка студентов в файл
 bool groupList::write(string filename) {
 	// Если список не пустой
 	if (!this->empty()) {
@@ -57,114 +59,112 @@ bool groupList::write(string filename) {
 			cerr << " Не удалось открыть файл!" << endl;
 			return false;
 		}
+		
+		// Записываем в файл
+		for (group element : this->_groupList) {
+			file << element.getGroup() << " " << element.getCourse() << " " << element.getSpeciality();
+		}
 
-
-		// Записываем слова в файл
-		for_each(this->_groupList.begin(), this->_groupList.end(),
-			[&file, this](map<string, string> element) {
-				// Выводим строку в файл
-				file << this->assemblyString(element) << endl;
-			}
-		);
 		return true;
 	}
 	return false;
 }
 
-// Публичный метод добавления группы в список
-bool groupList::create(studentList _student) {
+// Метод добавления группы в список
+bool groupList::create() {
 
 	this->input();
 
 	// Проверка есть ли такая группа
-	if (checkGroup(this->group)) {
-		cout << " Не удалось добавить! Группа \"" << this->group << "\" существует!" << endl;
+	if (this->checkGroup(this->groupNumber)) {
+		cout << " Не удалось добавить! Группа \"" << this->groupNumber << "\" существует!" << endl;
 		this->resetVariables(); // Обнуляем временные переменные;
 		return false;
 	}
 
 	// Добавляем группы в список
-	append(this->group, this->course, this->speciality);
+	append(this->groupNumber, this->course, this->speciality);
 
 	return true;
 }
 
-// Публичный метод изменения информации о группе
-bool groupList::update(int id, studentList _student) {
-	if (empty() || id > (int)this->_groupList.size() || id < 0) {
+// Метод изменения информации о группе
+bool groupList::update(unsigned id) {
+
+	// Если пустой список или ID не существует
+	if (empty() || !this->checkID(id)) {
 		return false;
 	}
-	// Выводим найденную группу
-	map<string, string> element = this->_groupList[id - 1];
-	cout << " Группа " << " \"#" << id << " " << this->assemblyString(element) << "\" найдена" << endl;
 
-	// Содержит данные до изменения
-	string temp = element["group"];
+	group &element = this->getGroupByID(id);
 
+	cout << "Группа \"#"
+		<< element.getID() << " "
+		<< element.getGroup() << " "
+		<< element.getCourse() << " "
+		<< element.getSpeciality() << "\" найдена" << endl;;
+
+	// Вводим новые данные
 	this->input();
 
-	if (this->group != temp) {
-		// Проверка есть ли такая группа
-		if (checkGroup(this->group)) {
-			cout << " Не удалось добавить! Группа \"" << this->group << "\" существует!" << endl;
-			this->resetVariables(); // Обнуляем временные переменные;
-			return false;
-		} 
-	}
+	// Заменяем элемент
+	element.setCourse(this->course);
+	element.setGroup(this->groupNumber);
+	element.setSpeciality(this->speciality);
 
-
-	element["group"] = this->group; // Группы
-	element["course"] = this->course; // Курс
-	element["speciality"] = this->speciality; // Специальность
-
-
-	this->_groupList[id - 1] = element;
-
+	
 	return true;
 }
 
-// Публичный метод удаление информации о группе
-bool groupList::remove(int id, studentList _student) {
+// Метод удаление информации о группе
+bool groupList::remove(unsigned id, studentList& _student) {
 
-	// Если список пуст или нет такой группы
-	if (empty() || id > (int)this->_groupList.size() || id < 0) {
+
+	// Если пустой список или ID не существует
+	if (empty() || !this->checkID(id)) {
 		return false;
 	}
+
+	group tempGroup = this->getGroupByID(id);
 
 	// Проверяем, есть ли студенты в группу
-	if (this->checkStudent(_groupList[id - 1]["group"], _student)) {
-		cout << " Не удалось удалить! В \"" << _groupList[id - 1]["group"] << "\" группе  есть студенты" << endl;
+	if (this->checkStudent(tempGroup.getGroup(), _student)) {
+		cout << " Не удалось удалить! В \"" << tempGroup.getGroup() << "\" группе  есть студенты" << endl;
 		return false;
 	}
 
 
-	// Удаляем группу из списка
-	this->_groupList.erase(_groupList.begin() + id - 1);
+	// Удаляем группу
+	vector<group> :: iterator it = remove_if(this->_groupList.begin(), this->_groupList.end(), 
+			[id](group element) {
+				return element.getID() == id;
+			}
+		);
+
+
+	this->_groupList.erase(it, this->_groupList.end());
+
 	return true;
 }
 
-// Публичный метод вывода списка групп в консоль
+// Метод вывода списка групп в консоль
 bool groupList::output() {
 
 	if (empty()) {
 		return false;
 	}
 
-	// Счетчик
-	int counter = 1;
+	// Выводим группу
+	for (group element : this->_groupList) {
+		cout << "\t #"
+			<< element.getID() << " "
+			<< element.getGroup() << " "
+			<< element.getCourse() << " "
+			<< element.getSpeciality() << endl;
+	}
 
-	// Выводим список групп
-	for_each(this->_groupList.begin(), this->_groupList.end(),
-		[this, &counter](map<string, string> element) {
-			// Выводим строку в консоль
-			cout << "\t #" << counter << " " << this->assemblyString(element) << endl;
-			// Увеличиваем счетчик
-			++counter;
-		}
-	);
 	return true;
 }
-
 
 // Приватный метод для проверки пуст ли список групп
 bool groupList::empty() {
@@ -173,84 +173,19 @@ bool groupList::empty() {
 
 // Приватный метод для создание новой группы
 void groupList::append(string newGroup, string newCourse, string newSpeciality) {
-
-	// Создаем врменный контейнер map
-	map<string, string> _newGroup;
-
-	// Заполняем контейнер данными
-	_newGroup["group"] = newGroup; // Группы
-	_newGroup["course"] = newCourse; // Курс
-	_newGroup["speciality"] = newSpeciality; // Специальность
-
-	// Обнуляем перменные класса
+	group tempGroup(newGroup, newCourse, newSpeciality);
+	this->_groupList.push_back(tempGroup);
 	this->resetVariables();
-
-	// Добавляем студента в общий список
-	this->_groupList.push_back(_newGroup);
 }
 
 // Приватный метод обнуляет перменные класса
 void groupList::resetVariables() {
 	// Обнуляем временные перменные
 	this->course = "";
-	this->group = "";
+	this->groupNumber = "";
 	this->speciality = "";
 }
 
-// Приватный метод собирает строку 
-string groupList::assemblyString(map<string, string> element) {
-
-	string data;
-
-	// Создаем строку последовательно соединяя 
-	for (auto& tempItem : this->writeQueue) {
-		for (auto& itemElement : element) {
-			if (tempItem == itemElement.first) {
-				data += " " + itemElement.second; // Складываем строки
-			}
-		}
-	}
-	return data; // Возвращаем собранную строку
-}
-
-// Приватный метод проверяет, есть ли студент в группе
-bool groupList::checkStudent(string group, studentList _student) {
-	// Флаг поиска
-	bool flag = false;
-
-	// Перебираем массив всех студентов
-	for_each(_student._studentList.begin(), _student._studentList.end(),
-		[group, &flag](map<string, string> element) {
-			// Итератор на элемент вектора
-			map <string, string> ::iterator it = element.find("group");
-			// Если нашли студента в группе
-			if (it->second == group) {
-				flag = true;
-			}
-		}
-	);
-
-	return flag;
-}
-
-// Приватный метод для проверки существует ли группа
-bool groupList::checkGroup(string groupNumber) {
-	// Флаг поиска
-	bool flag = false;
-	// Перебираем массив групп
-	for_each(this->_groupList.begin(), this->_groupList.end(),
-		[groupNumber, &flag](map<string, string> element) {
-			// Возвращаем итератор на найденный элемент
-			map<string, string> ::iterator it = element.find("group");
-			if (it->second == groupNumber) {
-				flag = true;
-			}
-		}
-	);
-
-	return flag;
-}
-	
 // Метод для считывания строки
 void groupList::input() {
 	// Просим ввести специальность
@@ -259,8 +194,315 @@ void groupList::input() {
 	getline(cin, this->speciality);
 	// Вводим номер группы
 	cout << "\t Введите номер группы: ";
-	cin >> this->group;
+	cin >> this->groupNumber;
 	// Вводим курс
 	cout << "\t Введите курс: ";
 	cin >> this->course;
+}
+
+// Приватный метод для проверки существует ли группа
+bool groupList::checkGroup(string groupNumber) {
+
+	for (group element : this->_groupList) {
+		if (element.getGroup() == groupNumber) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+// Приватный метод проверяет, есть ли студент в группе
+bool groupList::checkStudent(string group, studentList &_student) {
+
+	for (student element : _student._studentList) {
+		if (element.getGroup() == group) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+// Метод получает группу по ID
+group &groupList::getGroupByID(unsigned ID) {
+	
+	// Ищем группу
+	for (auto &element : this->_groupList) {
+		if (element.getID() == ID) {
+			return element;
+		}
+	}
+}
+
+// Метод проверяет есть ли такой ID
+bool groupList::checkID(unsigned ID) {
+	for (group element : this->_groupList) {
+		if (element.getID() == ID) {
+			return true;
+		}
+	}
+	return false;
+}
+
+// Метод добавления дисциплины для сдачи
+bool groupList::createDiscipline(disciplineList& _discipline, studentList &_student, unsigned ID) {
+	string status = "Y";
+
+	// Если ввели не тот ID
+	if (!this->checkID(ID)) {
+		return false;
+	}
+
+	// Находим группу 
+	group &currentGroup = this->getGroupByID(ID);
+
+	_discipline.output();
+
+	unsigned id = 0;
+
+	do {
+
+		// Вспомогательные перменные
+		string type;
+		string date;
+
+		// Вводим дисциплину
+		cout << " Введите ID дисциплины: ";
+		cin >> id;
+
+		// Если выбрал не тот ID
+		if (!_discipline.checkID(id)) {
+			cout << " Такой дисциплины не существует!" << endl;
+			return false;
+		}
+
+		// Получаем дисциплину
+		discipline& currentDiscipline = _discipline.getDisciplineByID(id);
+
+		// Если дисциплина уже добавлена
+		for (session element : currentGroup._session) {
+			if (element.getDisciplineName() == currentDiscipline.getName()) {
+				cout << " Дисциплина \"" << currentDiscipline.getName() << "\" уще существует!" << endl;
+				return false;
+			}
+		}
+
+		// Вводим тип сдачи
+		cout << " Введите тип сдачи: ";
+		cin.ignore();
+		getline(cin, type);
+		// Вводим дату сдачи
+		cout << " Введите дату сдачи: ";
+		getline(cin, date);
+
+
+		// Создаем предмет для сессии
+		session tempSession(type, date, currentDiscipline);
+
+
+		//	Добавляем предметы
+		rating _tempRating(currentDiscipline, "Не указано");
+
+		for (auto &element : _student._studentList) {
+			if (element.getGroup() == currentGroup.getGroup()) {
+				element._rating.push_back(_tempRating);
+			}
+		}
+
+
+		// Вызываем метод добавления
+		currentGroup._session.push_back(tempSession);
+
+		cout << " Вы хотите продолжить ввод? [Y/N]: ";
+		cin >> status;
+
+		// Если ввод неверный завершаем цикл
+		if (!(status != "N" || status != "Y")) break;
+
+	} while (status != "N");
+
+	return true;
+}
+
+// Метод для обновления предмета для сдачи
+bool groupList::updateDiscipline(unsigned ID) {
+
+	// Если ввели не тот ID
+	if (!this->checkID(ID)) {
+		return false;
+	}
+
+	// Находим группу 
+	group &currentGroup = this->getGroupByID(ID);
+
+	currentGroup.getDiscipline();
+
+	// Если списко пуст
+	if (currentGroup._session.empty()) {
+		cout << " Список пуст!" << endl;
+		return false;
+	}
+
+	// Вспомогательные перменные
+	string type;
+	string date;
+	unsigned id;
+
+	// Вводим дисциплину
+	cout << " Введите ID дисциплины: ";
+	cin >> id;
+
+	// Если выбрал не тот ID
+	if (id > currentGroup._session.size() || id < 0) {
+		cout << " Такой дисциплины не существует!" << endl;
+		return false;
+	}
+
+	// Вводим тип сдачи
+	cout << " Введите тип сдачи: ";
+	cin.ignore();
+	getline(cin, type);
+	// Вводим дату сдачи
+	cout << " Введите дату сдачи: ";
+	getline(cin, date);
+
+	currentGroup._session[id - 1].setDate(date);
+	currentGroup._session[id - 1].setType(type);
+
+	return true;
+
+}
+
+// Метод для удаления предмета для сдачи
+bool groupList::removeDiscipline(unsigned ID) {
+
+	// Если ввели не тот ID
+	if (!this->checkID(ID)) {
+		return false;
+	}
+
+	// Находим группу 
+	group &currentGroup = this->getGroupByID(ID);
+
+	currentGroup.getDiscipline();
+
+	// Если списко пуст
+	if (currentGroup._session.empty()) {
+		cout << " Список пуст!" << endl;
+		return false;
+	}
+
+	unsigned id;
+
+	// Вводим дисциплину
+	cout << " Введите ID дисциплины: ";
+	cin >> id;
+
+	// Если выбрал не тот ID
+	if (id > currentGroup._session.size() || id < 0) {
+		cout << " Такой дисциплины не существует!" << endl;
+		return false;
+	}
+
+
+	currentGroup._session.erase(currentGroup._session.begin() + id - 1);
+
+	return true;
+}
+
+// Метод для получения списка дисциплин
+bool groupList::getGroupDiscipline(unsigned ID) {
+
+	// Если ввели не тот ID
+	if (!this->checkID(ID)) {
+		return false;
+	}
+
+	group& temp = this->getGroupByID(ID);
+
+	// Файловый поток
+	ofstream file("GroupDiscipline-" + temp.getGroup() + ".txt");
+
+	// Если файл не удалось открыть
+	if (!file) {
+		cerr << " Ошибка! Не удалось открыть файл для записи!" << endl;
+		return false;
+	}
+
+	// Если списко пуст
+	if (temp._session.empty()) {
+		cout << " Список пуст!" << endl;
+		return false;
+	}
+
+	int counter = 1;
+
+	for (auto element : temp._session) {
+		cout << left << "\t #" << counter << " | "
+			<< setw(25) << element.getDisciplineName() << " | "
+			<< setw(15) << element.getType() << " | "
+			<< element.getDate() << endl;
+		file << left << "\t #" << counter << " | "
+			<< setw(25) << element.getDisciplineName() << " | "
+			<< setw(15) << element.getType() << " | "
+			<< element.getDate() << endl;
+		counter++;
+	}
+	return true;
+	return true;
+}
+
+// Метод вывода дисциплин всего факультета
+bool groupList::getFacultyDescipline() {
+	// Если списко пуст
+	if (this->empty()) {
+		return false;
+	}
+
+	// Файловый поток
+	ofstream file("FacultyDiscipline.txt");
+
+	// Если файл не удалось открыть
+	if (!file) {
+		cerr << " Ошибка! Не удалось открыть файл для записи!" << endl;
+		return false;
+	}
+
+	// Сортируем группы по возрастанию
+	sort(this->_groupList.begin(), this->_groupList.end(), 
+			[](group &a, group &b) -> bool {
+				return a.getGroup() < b.getGroup();
+			}
+		);
+
+	// Выводим дисциплины
+	for (group element : this->_groupList) {
+
+		cout << " Дисциплины \"" << element.getGroup() << "\" группы для сдачи" << endl;
+		file << " Дисциплины \"" << element.getGroup() << "\" группы для сдачи" << endl;
+
+		if (element._session.empty()) {
+			cout << "\t #0 | Дисциплины для сдачи не указаны" << endl;
+			file << "\t #0 | Дисциплины для сдачи не указаны" << endl;
+		}
+
+		int counter = 1;
+
+		for (session item : element._session) {
+			cout << left << "\t #" << counter << " | "
+				<< setw(25) << item.getDisciplineName() << " | "
+				<< setw(15) << item.getType() << " | "
+				<< item.getDate() << endl;
+			file << left << "\t #" << counter << " | "
+				<< setw(25) << item.getDisciplineName() << " | "
+				<< setw(15) << item.getType() << " | "
+				<< item.getDate() << endl;
+			counter++;
+		}
+
+		cout << endl;
+	}
+
+	return true;
 }

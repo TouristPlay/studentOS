@@ -1,46 +1,53 @@
 #include "library.h"
+#include "group.h"
 
 class studentList;
-class reports;
-class ratingList;
 
 class groupList {
-	public: // Публичная область класса
+
+	public:
 
 		// Метод считывание списка групп
-		bool read(studentList _student, string filename = "group");
+		bool read(string filename = "group");
 
 		// Метод для записи списка студентов в файл
 		bool write(string filename = "newGroup");
 
 		// Метод добавления группы в список
-		bool create(studentList _student);
+		bool create();
 
 		// Метод изменения информации о группе
-		bool update(int id, studentList _student);
+		bool update(unsigned id);
 
 		// Метод удаление информации о группе
-		bool remove(int id, studentList _student);
+		bool remove(unsigned id, studentList &_student);
 
 		// Метод вывода списка групп в консоль
 		bool output();
 
-	private: // Закрытая область класса
+		// Метод добавления дисциплины для сдачи
+		bool createDiscipline(disciplineList& _discipline, studentList &_student, unsigned ID);
+
+		// Метод для обновления предмета для сдачи
+		bool updateDiscipline(unsigned ID);
+
+		// Метод для удаления предмета для сдачи
+		bool removeDiscipline(unsigned ID);
+
+		// Метод для получения списка дисциплин
+		bool getGroupDiscipline(unsigned ID);
+
+		// Метод вывода дисциплин всего факультета
+		bool getFacultyDescipline();
+
+	private:
 
 		// Курс круппы
 		string course;
 		// Номер группы
-		string group;
+		string groupNumber;
 		// Имя специальности
 		string speciality;
-
-
-		// Храним последовательность записи в map
-		vector<string> writeQueue = {
-			"group",
-			"course",
-			"speciality",
-		};
 
 		// Метод для проверки пуст ли список групп
 		bool empty();
@@ -51,24 +58,24 @@ class groupList {
 		// Метод обнуляет перменные класса
 		void resetVariables();
 
-		// Метод собирает строку 
-		string assemblyString(map<string, string> element);
-
-		// Метод проверяет, есть ли студент в группе
-		bool checkStudent(string group, studentList _student);
-
 		// Метод для проверки существует ли группа
 		bool checkGroup(string groupNumber);
+
+		// Метод проверяет, есть ли студент в группе
+		bool checkStudent(string group, studentList &_student);
+
+		// Метод получается группу по ID
+		group &getGroupByID(unsigned ID);
+
+		// Метод проверяет есть ли такой ID
+		bool checkID(unsigned ID);
 
 		// Метод для считывания строки
 		void input();
 
-		// Список всей группы
-		vector <map<string, string>> _groupList; // Классом!!!!
+		// Список всех групп
+		vector <group> _groupList; 
 
-		// Объявляем дружественный класс
 		friend studentList;
-		friend reports;
-		friend ratingList;
 };
 
